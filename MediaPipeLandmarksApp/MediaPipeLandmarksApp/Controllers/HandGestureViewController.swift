@@ -60,7 +60,11 @@ extension HandGestureViewController: CameraManagerDelegate {
 
 extension HandGestureViewController: GestureRecognizerServiceDelegate {
     func gestureRecognizerService(_ service: GestureRecognizerService, didFinishRecognition result: GestureRecognizerResult?, imageSize: CGSize, error: Error?) {
-        guard let result = result, error == nil else { return }
+        if let error = error {
+            print("Gesture recognition error: \(error)")
+            return
+        }
+        guard let result = result else { return }
         
         DispatchQueue.main.async {
             self.overlayView.draw(landmarks: result.landmarks, gestures: result.gestures, imageSize: imageSize)

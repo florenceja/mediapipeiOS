@@ -87,19 +87,13 @@ class HandOverlayView: UIView {
                 minY = min(minY, point.y)
             }
             
-            // ✅ 绘制手势名称（适配 Category 为 OpaquePointer 的情况）
+            // Draw top gesture label for current hand.
             if handIndex < gestures.count {
                 let gestureCategories = gestures[handIndex]
                 if let topCategory = gestureCategories.max(by: {
-                    // 通过 KVC 安全获取 score（适配 OpaquePointer）
-                    let score1 = ($0 as AnyObject).value(forKey: "score") as? Float ?? 0
-                    let score2 = ($1 as AnyObject).value(forKey: "score") as? Float ?? 0
-                    return score1 < score2
+                    $0.score < $1.score
                 }) {
-                    // 通过 KVC 获取 categoryName/label（适配 OpaquePointer）
-                    let categoryName = (topCategory as AnyObject).value(forKey: "categoryName") as? String
-                    let label = (topCategory as AnyObject).value(forKey: "label") as? String
-                    let text = categoryName ?? label ?? "Unknown"
+                    let text = topCategory.categoryName.isEmpty ? "Unknown" : topCategory.categoryName
                     
                     let attributes: [NSAttributedString.Key: Any] = [
                         .font: UIFont.boldSystemFont(ofSize: 24),

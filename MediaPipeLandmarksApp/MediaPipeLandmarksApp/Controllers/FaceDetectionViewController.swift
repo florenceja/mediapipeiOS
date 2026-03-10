@@ -60,7 +60,11 @@ extension FaceDetectionViewController: CameraManagerDelegate {
 
 extension FaceDetectionViewController: FaceLandmarkerServiceDelegate {
     func faceLandmarkerService(_ service: FaceLandmarkerService, didFinishDetection result: FaceLandmarkerResult?, imageSize: CGSize, error: Error?) {
-        guard let result = result, error == nil else { return }
+        if let error = error {
+            print("Face detection error: \(error)")
+            return
+        }
+        guard let result = result else { return }
         
         DispatchQueue.main.async {
             self.overlayView.draw(landmarks: result.faceLandmarks, imageSize: imageSize)

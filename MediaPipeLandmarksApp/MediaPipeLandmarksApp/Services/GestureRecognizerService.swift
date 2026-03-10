@@ -10,6 +10,8 @@ class GestureRecognizerService: NSObject {
     weak var delegate: GestureRecognizerServiceDelegate?
     private var gestureRecognizer: GestureRecognizer?
     private var lastImageSize: CGSize = .zero
+    private var lastTimestampMs = -1
+    private let imageOrientation: UIImage.Orientation = .leftMirrored
     
     override init() {
         super.init()
@@ -46,12 +48,17 @@ class GestureRecognizerService: NSObject {
         let height = CVPixelBufferGetHeight(imageBuffer)
         lastImageSize = CGSize(width: CGFloat(width), height: CGFloat(height))
         
-        let timestamp = Int(CMSampleBufferGetPresentationTimeStamp(sampleBuffer).seconds * 1000)
+        var timestamp = Int(CMSampleBufferGetPresentationTimeStamp(sampleBuffer).seconds * 1000)
+        if timestamp <= lastTimestampMs {
+            timestamp = lastTimestampMs + 1
+        }
+        lastTimestampMs = timestamp
         
         do {
-            let mpImage = try MPImage(sampleBuffer: sampleBuffer)
+            let mpImage = try MPImage(sampleBuffer: sampleBuffer, orientation: imageOrientation)
             try gestureRecognizer.recognizeAsync(image: mpImage, timestampInMilliseconds: timestamp)
         } catch {
+            delegate?.gestureRecognizerService(self, didFinishRecognition: nil, imageSize: lastImageSize, error: error)
             print("Error recognizing gestures: \(error)")
         }
     }
