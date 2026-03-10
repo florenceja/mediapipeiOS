@@ -1,0 +1,5 @@
+platform :ios, '14.0'
+target 'MediaPipeLandmarksApp' do
+  use_frameworks!
+  pod 'MediaPipeTasksVision', '~> 0.10.0'
+end

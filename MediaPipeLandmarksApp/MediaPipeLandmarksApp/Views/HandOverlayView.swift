@@ -37,7 +37,7 @@ class HandOverlayView: UIView {
         
         for (index, hand) in handLandmarks.enumerated() {
             // Draw connections
-            for connection in GestureRecognizer.handLandmarksConnections() {
+            for connection in HandLandmarksCo() {
                 let start = hand[Int(connection.start)]
                 let end = hand[Int(connection.end)]
                 

@@ -3,41 +3,45 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 54;
+	objectVersion = 55;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		C3D717BD4E3A492CB715DF59 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F7043487366485097C63145 /* AppDelegate.swift */; };
-		F344F45F46CA4EB2BC77E84E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4A01CA686E541BFAF034C5F /* SceneDelegate.swift */; };
-		24E6D50C36104A30B761D0CA /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CF22A6AA3664FEA9BF170D4 /* MainViewController.swift */; };
 		0A2C7726D033496D94F7D372 /* FaceDetectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91451BC9927141BFA3AEB06B /* FaceDetectionViewController.swift */; };
-		A2D6A8DDC2124BDAB70A1B62 /* HandGestureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC34FA7F3F6A4EF3B9D65CE0 /* HandGestureViewController.swift */; };
+		24E6D50C36104A30B761D0CA /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CF22A6AA3664FEA9BF170D4 /* MainViewController.swift */; };
+		36C6FCB2D4EF42B495EDEEFA /* gesture_recognizer.task in Resources */ = {isa = PBXBuildFile; fileRef = D7DF3FA4F6DD4926B4DBCA9A /* gesture_recognizer.task */; };
+		3D61189B4899492A986F8799 /* face_landmarker.task in Resources */ = {isa = PBXBuildFile; fileRef = 9015122E60DE42D8B1BDEE7E /* face_landmarker.task */; };
 		4C56B5B2382E494988981D25 /* CameraManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C47FE137F04402AAE11D56 /* CameraManager.swift */; };
-		F8C2633E158A4DFCB4A5C52D /* FaceLandmarkerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE2620FB941B4AA283F3F0E5 /* FaceLandmarkerService.swift */; };
-		E2A77842AC084973ADD54B97 /* GestureRecognizerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FAB9F6D7F024658A4B097D5 /* GestureRecognizerService.swift */; };
 		72BDA9A3D8924A1AB1F89F6B /* FaceOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5433730DFB642AC800CD493 /* FaceOverlayView.swift */; };
+		A2030D936E08027075E3216B /* Pods_MediaPipeLandmarksApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F50B1C15D4927023C99387C3 /* Pods_MediaPipeLandmarksApp.framework */; };
+		A2D6A8DDC2124BDAB70A1B62 /* HandGestureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC34FA7F3F6A4EF3B9D65CE0 /* HandGestureViewController.swift */; };
 		A3AD96A545A44145A9E28F6F /* HandOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA02E4FBA14A4E4FA841D89A /* HandOverlayView.swift */; };
 		B20305B08D56491E8A0EA1EF /* CoordinateTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D7B7955872141F49A25C8B3 /* CoordinateTransformer.swift */; };
-		3D61189B4899492A986F8799 /* face_landmarker.task in Resources */ = {isa = PBXBuildFile; fileRef = 9015122E60DE42D8B1BDEE7E /* face_landmarker.task */; };
-		36C6FCB2D4EF42B495EDEEFA /* gesture_recognizer.task in Resources */ = {isa = PBXBuildFile; fileRef = D7DF3FA4F6DD4926B4DBCA9A /* gesture_recognizer.task */; };
+		C3D717BD4E3A492CB715DF59 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F7043487366485097C63145 /* AppDelegate.swift */; };
+		E2A77842AC084973ADD54B97 /* GestureRecognizerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FAB9F6D7F024658A4B097D5 /* GestureRecognizerService.swift */; };
+		F344F45F46CA4EB2BC77E84E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4A01CA686E541BFAF034C5F /* SceneDelegate.swift */; };
+		F8C2633E158A4DFCB4A5C52D /* FaceLandmarkerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE2620FB941B4AA283F3F0E5 /* FaceLandmarkerService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		5F7043487366485097C63145 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		B4A01CA686E541BFAF034C5F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		D60C29DBEA9942E8A6C2256D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1CF22A6AA3664FEA9BF170D4 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
-		91451BC9927141BFA3AEB06B /* FaceDetectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceDetectionViewController.swift; sourceTree = "<group>"; };
-		CC34FA7F3F6A4EF3B9D65CE0 /* HandGestureViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandGestureViewController.swift; sourceTree = "<group>"; };
-		60C47FE137F04402AAE11D56 /* CameraManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraManager.swift; sourceTree = "<group>"; };
-		FE2620FB941B4AA283F3F0E5 /* FaceLandmarkerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceLandmarkerService.swift; sourceTree = "<group>"; };
-		7FAB9F6D7F024658A4B097D5 /* GestureRecognizerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GestureRecognizerService.swift; sourceTree = "<group>"; };
-		C5433730DFB642AC800CD493 /* FaceOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceOverlayView.swift; sourceTree = "<group>"; };
-		AA02E4FBA14A4E4FA841D89A /* HandOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandOverlayView.swift; sourceTree = "<group>"; };
-		9D7B7955872141F49A25C8B3 /* CoordinateTransformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinateTransformer.swift; sourceTree = "<group>"; };
-		9015122E60DE42D8B1BDEE7E /* face_landmarker.task */ = {isa = PBXFileReference; lastKnownFileType = file; path = face_landmarker.task; sourceTree = "<group>"; };
-		D7DF3FA4F6DD4926B4DBCA9A /* gesture_recognizer.task */ = {isa = PBXFileReference; lastKnownFileType = file; path = gesture_recognizer.task; sourceTree = "<group>"; };
 		39ED69C7940448C697798877 /* MediaPipeLandmarksApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MediaPipeLandmarksApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		5F7043487366485097C63145 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		60C47FE137F04402AAE11D56 /* CameraManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraManager.swift; sourceTree = "<group>"; };
+		7FAB9F6D7F024658A4B097D5 /* GestureRecognizerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GestureRecognizerService.swift; sourceTree = "<group>"; };
+		9015122E60DE42D8B1BDEE7E /* face_landmarker.task */ = {isa = PBXFileReference; lastKnownFileType = file; path = face_landmarker.task; sourceTree = "<group>"; };
+		91451BC9927141BFA3AEB06B /* FaceDetectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceDetectionViewController.swift; sourceTree = "<group>"; };
+		9D7B7955872141F49A25C8B3 /* CoordinateTransformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinateTransformer.swift; sourceTree = "<group>"; };
+		A6B224C69230A7E66D31BFBC /* Pods-MediaPipeLandmarksApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MediaPipeLandmarksApp.release.xcconfig"; path = "Target Support Files/Pods-MediaPipeLandmarksApp/Pods-MediaPipeLandmarksApp.release.xcconfig"; sourceTree = "<group>"; };
+		AA02E4FBA14A4E4FA841D89A /* HandOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandOverlayView.swift; sourceTree = "<group>"; };
+		B4A01CA686E541BFAF034C5F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		C5433730DFB642AC800CD493 /* FaceOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceOverlayView.swift; sourceTree = "<group>"; };
+		CC34FA7F3F6A4EF3B9D65CE0 /* HandGestureViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandGestureViewController.swift; sourceTree = "<group>"; };
+		D60C29DBEA9942E8A6C2256D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D7DF3FA4F6DD4926B4DBCA9A /* gesture_recognizer.task */ = {isa = PBXFileReference; lastKnownFileType = file; path = gesture_recognizer.task; sourceTree = "<group>"; };
+		F50B1C15D4927023C99387C3 /* Pods_MediaPipeLandmarksApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MediaPipeLandmarksApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FC1014C852C1B1E7706AC6EC /* Pods-MediaPipeLandmarksApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MediaPipeLandmarksApp.debug.xcconfig"; path = "Target Support Files/Pods-MediaPipeLandmarksApp/Pods-MediaPipeLandmarksApp.debug.xcconfig"; sourceTree = "<group>"; };
+		FE2620FB941B4AA283F3F0E5 /* FaceLandmarkerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceLandmarkerService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -45,26 +49,67 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A2030D936E08027075E3216B /* Pods_MediaPipeLandmarksApp.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0B82B534F09F4C43AA61249F /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				9D7B7955872141F49A25C8B3 /* CoordinateTransformer.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
 		16B9EB74B2DD4500ACB763FD = {
 			isa = PBXGroup;
 			children = (
 				A8AED8F1FE67473BB27FCA03 /* MediaPipeLandmarksApp */,
 				C8B9785386714787B8F6BDCD /* Products */,
+				7F5BA85272E2FC97D8724CF4 /* Pods */,
+				1E058D39CFE62469311ACAC7 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
-		C8B9785386714787B8F6BDCD /* Products */ = {
+		1E058D39CFE62469311ACAC7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				39ED69C7940448C697798877 /* MediaPipeLandmarksApp.app */,
+				F50B1C15D4927023C99387C3 /* Pods_MediaPipeLandmarksApp.framework */,
 			);
-			name = Products;
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		2BFB8F6C33174CA3A63F48F6 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				60C47FE137F04402AAE11D56 /* CameraManager.swift */,
+				FE2620FB941B4AA283F3F0E5 /* FaceLandmarkerService.swift */,
+				7FAB9F6D7F024658A4B097D5 /* GestureRecognizerService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		7F5BA85272E2FC97D8724CF4 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				FC1014C852C1B1E7706AC6EC /* Pods-MediaPipeLandmarksApp.debug.xcconfig */,
+				A6B224C69230A7E66D31BFBC /* Pods-MediaPipeLandmarksApp.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		9930CEA206414757B2E6FFE1 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				1CF22A6AA3664FEA9BF170D4 /* MainViewController.swift */,
+				91451BC9927141BFA3AEB06B /* FaceDetectionViewController.swift */,
+				CC34FA7F3F6A4EF3B9D65CE0 /* HandGestureViewController.swift */,
+			);
+			path = Controllers;
 			sourceTree = "<group>";
 		};
 		A8AED8F1FE67473BB27FCA03 /* MediaPipeLandmarksApp */ = {
@@ -82,24 +127,21 @@
 			path = MediaPipeLandmarksApp;
 			sourceTree = "<group>";
 		};
-		9930CEA206414757B2E6FFE1 /* Controllers */ = {
+		B525440DDDD74CDF96FBDEE3 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				1CF22A6AA3664FEA9BF170D4 /* MainViewController.swift */,
-				91451BC9927141BFA3AEB06B /* FaceDetectionViewController.swift */,
-				CC34FA7F3F6A4EF3B9D65CE0 /* HandGestureViewController.swift */,
+				9015122E60DE42D8B1BDEE7E /* face_landmarker.task */,
+				D7DF3FA4F6DD4926B4DBCA9A /* gesture_recognizer.task */,
 			);
-			path = Controllers;
+			path = Models;
 			sourceTree = "<group>";
 		};
-		2BFB8F6C33174CA3A63F48F6 /* Services */ = {
+		C8B9785386714787B8F6BDCD /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				60C47FE137F04402AAE11D56 /* CameraManager.swift */,
-				FE2620FB941B4AA283F3F0E5 /* FaceLandmarkerService.swift */,
-				7FAB9F6D7F024658A4B097D5 /* GestureRecognizerService.swift */,
+				39ED69C7940448C697798877 /* MediaPipeLandmarksApp.app */,
 			);
-			path = Services;
+			name = Products;
 			sourceTree = "<group>";
 		};
 		F26184707A2A48249D606B86 /* Views */ = {
@@ -111,23 +153,6 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
-		0B82B534F09F4C43AA61249F /* Utils */ = {
-			isa = PBXGroup;
-			children = (
-				9D7B7955872141F49A25C8B3 /* CoordinateTransformer.swift */,
-			);
-			path = Utils;
-			sourceTree = "<group>";
-		};
-		B525440DDDD74CDF96FBDEE3 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				9015122E60DE42D8B1BDEE7E /* face_landmarker.task */,
-				D7DF3FA4F6DD4926B4DBCA9A /* gesture_recognizer.task */,
-			);
-			path = Models;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -135,6 +160,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = A848FFC0ABCF422A963D927A /* Build configuration list for PBXNativeTarget "MediaPipeLandmarksApp" */;
 			buildPhases = (
+				8C62507992A2B6A5B2F0F6E4 /* [CP] Check Pods Manifest.lock */,
 				7C75A4B2EFA14197A3D955B6 /* Sources */,
 				4A63EBE33B3A4E1AB649C3BA /* Frameworks */,
 				DB6844900B3340A099C4C23D /* Resources */,
@@ -191,6 +217,31 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		8C62507992A2B6A5B2F0F6E4 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-MediaPipeLandmarksApp-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		7C75A4B2EFA14197A3D955B6 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -213,12 +264,56 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
+		8414AB84688F4B549D018D9E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		84E018B7AA5A405EB1950E9E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = FC1014C852C1B1E7706AC6EC /* Pods-MediaPipeLandmarksApp.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = AL5856CAUL;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = MediaPipeLandmarksApp/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.MediaPipeLandmarksApp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
 		AC98D9E7733440E28B016006 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -240,55 +335,15 @@
 			};
 			name = Debug;
 		};
-		8414AB84688F4B549D018D9E /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_ENABLE_MODULES = YES;
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				GCC_NO_COMMON_BLOCKS = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
-				MTL_FAST_MATH = YES;
-				SDKROOT = iphoneos;
-				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_OPTIMIZATION_LEVEL = "-O";
-				VALIDATE_PRODUCT = YES;
-			};
-			name = Release;
-		};
-		84E018B7AA5A405EB1950E9E /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				GENERATE_INFOPLIST_FILE = NO;
-				INFOPLIST_FILE = MediaPipeLandmarksApp/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.MediaPipeLandmarksApp;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
 		C6BBDF289A254B24919BB366 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A6B224C69230A7E66D31BFBC /* Pods-MediaPipeLandmarksApp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = AL5856CAUL;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = MediaPipeLandmarksApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -307,20 +362,20 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		D52F97F4BCF241C9952B3BCF /* Build configuration list for PBXProject "MediaPipeLandmarksApp" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				AC98D9E7733440E28B016006 /* Debug */,
-				8414AB84688F4B549D018D9E /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		A848FFC0ABCF422A963D927A /* Build configuration list for PBXNativeTarget "MediaPipeLandmarksApp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				84E018B7AA5A405EB1950E9E /* Debug */,
 				C6BBDF289A254B24919BB366 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D52F97F4BCF241C9952B3BCF /* Build configuration list for PBXProject "MediaPipeLandmarksApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AC98D9E7733440E28B016006 /* Debug */,
+				8414AB84688F4B549D018D9E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
