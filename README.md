@@ -24,13 +24,20 @@ MediaPipeLandmarksApp/
 ### 在 Mac 上运行
 
 ```bash
-# 1. 打开项目
+# 1. 进入项目目录
 cd MediaPipeLandmarksApp
-open MediaPipeLandmarksApp.xcodeproj
 
-# 2. 在 Xcode 中配置签名（Signing & Capabilities）
-# 3. 选择设备并运行（⌘R）
+# 2. 安装 CocoaPods 依赖（官方推荐）
+pod install
+
+# 3. 打开 workspace（注意：不是 .xcodeproj）
+open MediaPipeLandmarksApp.xcworkspace
+
+# 4. 在 Xcode 中配置签名（Signing & Capabilities）
+# 5. 选择设备并运行（⌘R）
 ```
+
+**重要**：使用 CocoaPods 后，必须打开 `.xcworkspace` 文件，而不是 `.xcodeproj` 文件！
 
 ### 从 Windows 传输到 Mac
 

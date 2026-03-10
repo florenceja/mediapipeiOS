@@ -210,56 +210,89 @@ Command + Shift + K (Clean Build Folder)
 rm -rf ~/Library/Developer/Xcode/DerivedData
 ```
 
-**方案三：通过 Swift Package Manager 添加 MediaPipe（完整流程）**
+**方案三：使用 CocoaPods 安装 MediaPipe（官方推荐）**
 
-项目使用 MediaPipe Tasks Vision 框架，如果缺少依赖需要添加：
+项目已配置 CocoaPods，首次运行需要安装依赖：
 
+```bash
+# 步骤 1：安装 CocoaPods（如果未安装）
+sudo gem install cocoapods
+
+# 步骤 2：进入项目目录
+cd MediaPipeLandmarksApp
+
+# 步骤 3：安装依赖
+pod install
+
+# 步骤 4：打开 workspace（注意：不是 .xcodeproj）
+open MediaPipeLandmarksApp.xcworkspace
 ```
-步骤 1：打开项目设置
-1. 在 Xcode 中打开项目
-2. 点击菜单栏 File → Add Package Dependencies...
-   （或者选择项目根节点 → Package Dependencies 标签 → 点击 "+" 按钮）
 
-步骤 2：添加 MediaPipe 仓库
-1. 在搜索框中输入 MediaPipe GitHub 地址：
-   https://github.com/google-ai-edge/mediapipe.git
+**重要**：使用 CocoaPods 后，必须打开 `.xcworkspace` 文件，而不是 `.xcodeproj` 文件！
+
+**常见问题**：
+
+Q1: CocoaPods 安装失败/网络超时
+```
+解决方案：
+1. 使用国内镜像源：
+   pod install --repo-update
    
-2. 点击 "Add Package"
-
-步骤 3：选择版本
-1. 在版本选择界面，选择 "Up to Next Major Version"
-2. 输入版本号：0.10.0（推荐稳定版本）
-3. 点击 "Add Package"
-
-步骤 4：选择产品
-1. 在 Product 列表中，勾选以下框架：
-   ☑ MediaPipeTasksVision（必需）
+2. 或者更换镜像源：
+   pod install --verbose --repo-update
    
-2. 点击 "Add Package"
-
-步骤 5：验证安装
-1. 等待 SPM 下载并解析依赖（进度条在 Xcode 右上角）
-2. 完成后，在项目导航器中可以看到：
-   Package Dependencies
-   └── mediapipe（绿色立方体图标）
-
-步骤 6：清理并重新编译
-1. Product → Clean Build Folder (Command + Shift + K)
-2. 重新编译：Command + B
+3. 如果 gem 安装慢，使用：
+   sudo gem install -n /usr/local/bin cocoapods
 ```
 
-**注意**：官方 MediaPipe Tasks Vision 首选 CocoaPods 安装。如果使用 SPM 遇到问题，可改用 CocoaPods：
-
-```ruby
-# Podfile
-platform :ios, '15.0'
-target 'MediaPipeLandmarksApp' do
-  use_frameworks!
-  pod 'MediaPipeTasksVision', '~> 0.10.0'
-end
+Q2: 安装后仍然报错 "No such module"
+```
+解决方案：
+1. 确认打开的是 .xcworkspace 文件，不是 .xcodeproj
+2. 清理构建：Command + Shift + K
+3. 重新编译：Command + B
+4. 如果仍失败，删除 Pods 重新安装：
+   rm -rf Pods Podfile.lock
+   pod install
 ```
 
-然后执行 `pod install` 并打开 `.xcworkspace` 文件。
+Q3: Xcode 版本不兼容
+```
+解决方案：
+1. 升级 CocoaPods 到最新版本：
+   sudo gem install cocoapods
+   
+2. 或者在 Podfile 中指定兼容性：
+   post_install do |installer|
+     installer.pods_project.targets.each do |target|
+       target.build_configurations.each do |config|
+         config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '15.0'
+       end
+     end
+   end
+```
+
+**方案四：通过 Swift Package Manager 添加（备选）**
+
+如果 CocoaPods 遇到问题，可以使用 SPM：
+
+```
+步骤 1：删除 CocoaPods 依赖
+1. 关闭 Xcode
+2. 删除 Pods 文件夹
+3. 删除 Podfile 和 Podfile.lock
+
+步骤 2：添加 SPM 依赖
+1. File → Add Package Dependencies...
+2. 输入：https://github.com/google-ai-edge/mediapipe.git
+3. 选择版本：0.10.0
+4. 勾选：MediaPipeTasksVision
+5. 点击 Add Package
+
+步骤 3：清理并重新编译
+1. Command + Shift + K
+2. Command + B
+```
 
 **常见问题**：
 

@@ -202,22 +202,29 @@ ls -la MediaPipeLandmarksApp/MediaPipeLandmarksApp.xcodeproj/
 
 ### 第四步：打开项目
 
-#### 方式一：使用命令行
+#### 方式一：使用命令行（推荐 CocoaPods 方式）
 
 ```bash
 # 在项目根目录执行
-cd ~/Projects/mediapipe_iOS
+cd ~/Projects/mediapipe_iOS/MediaPipeLandmarksApp
 
-# 打开 Xcode 项目
-open MediaPipeLandmarksApp/MediaPipeLandmarksApp.xcodeproj
+# 如果使用 CocoaPods（官方推荐）
+pod install
+open MediaPipeLandmarksApp.xcworkspace
+
+# 如果直接使用 Xcode（不使用 CocoaPods）
+open MediaPipeLandmarksApp.xcodeproj
 ```
 
 #### 方式二：使用 Finder
 
 1. 打开 Finder
 2. 导航到 `~/Projects/mediapipe_iOS/MediaPipeLandmarksApp/`
-3. 双击 `MediaPipeLandmarksApp.xcodeproj` 文件
+3. 双击 `MediaPipeLandmarksApp.xcworkspace` 文件（CocoaPods 方式）
+   或 `MediaPipeLandmarksApp.xcodeproj` 文件（直接方式）
 4. Xcode 会自动启动并打开项目
+
+**注意**：如果使用 CocoaPods，必须打开 `.xcworkspace` 文件！
 
 ---
 

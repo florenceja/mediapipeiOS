@@ -5,6 +5,8 @@
 
 # CocoaPods
 Pods/
+*.xcworkspace
+!MediaPipeLandmarksApp/MediaPipeLandmarksApp.xcworkspace/contents.xcworkspacedata
 
 # Build
 *.a

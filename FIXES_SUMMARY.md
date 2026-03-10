@@ -40,35 +40,22 @@
 ### 步骤 1：打开项目
 ```bash
 cd MediaPipeLandmarksApp
-open MediaPipeLandmarksApp.xcodeproj
 ```
 
-### 步骤 2：添加 MediaPipe 依赖（二选一）
+### 步骤 2：安装 CocoaPods 依赖（官方推荐）
 
-**方式 A：Swift Package Manager（推荐）**
-1. File → Add Package Dependencies...
-2. 输入：`https://github.com/google-ai-edge/mediapipe.git`
-3. 选择版本：`0.10.0`
-4. 勾选：`MediaPipeTasksVision`
-5. 点击 Add Package
-
-**方式 B：CocoaPods（官方推荐）**
 ```bash
-# 在项目根目录创建 Podfile
-cat > Podfile << EOF
-platform :ios, '15.0'
-target 'MediaPipeLandmarksApp' do
-  use_frameworks!
-  pod 'MediaPipeTasksVision', '~> 0.10.0'
-end
-EOF
+# 如果未安装 CocoaPods
+sudo gem install cocoapods
 
 # 安装依赖
 pod install
 
-# 打开 workspace
+# 打开 workspace（注意：必须使用 .xcworkspace）
 open MediaPipeLandmarksApp.xcworkspace
 ```
+
+**重要**：使用 CocoaPods 后，必须打开 `.xcworkspace` 文件，而不是 `.xcodeproj` 文件！
 
 ### 步骤 3：配置签名
 1. 选择项目根节点 → Signing & Capabilities
@@ -84,6 +71,26 @@ open MediaPipeLandmarksApp.xcworkspace
 ### 步骤 5：iOS 16+ 真机调试（如使用真机）
 1. 设备上开启开发者模式：设置 → 隐私与安全性 → 开发者模式
 2. 信任开发者证书：设置 → 通用 → VPN 与设备管理
+
+### 备选方案：Swift Package Manager
+
+如果 CocoaPods 遇到问题，可以使用 SPM：
+
+1. 删除 CocoaPods 相关文件：
+   ```bash
+   rm -rf Pods Podfile Podfile.lock MediaPipeLandmarksApp.xcworkspace
+   ```
+
+2. 在 Xcode 中添加 SPM 依赖：
+   - File → Add Package Dependencies...
+   - 输入：`https://github.com/google-ai-edge/mediapipe.git`
+   - 版本：`0.10.0`
+   - 勾选：`MediaPipeTasksVision`
+   - 点击 Add Package
+
+3. 清理并编译：
+   - Command + Shift + K
+   - Command + B
 
 ## API 对照表
 
