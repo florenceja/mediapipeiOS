@@ -37,7 +37,7 @@ class HandOverlayView: UIView {
         
         for (index, hand) in handLandmarks.enumerated() {
             // Draw connections
-            for connection in HandLandmarksCo() {
+            for connection in HandLandmarker.handConnections {
                 let start = hand[Int(connection.start)]
                 let end = hand[Int(connection.end)]
                 
@@ -78,7 +78,7 @@ class HandOverlayView: UIView {
             
             // Draw gesture name
             if index < gestures.count, let firstGesture = gestures[index].first {
-                let text = firstGesture.categoryName ?? "Unknown"
+                let text = firstGesture.displayName ?? "Unknown"
                 let attributes: [NSAttributedString.Key: Any] = [
                     .font: UIFont.boldSystemFont(ofSize: 24),
                     .foregroundColor: UIColor.red

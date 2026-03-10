@@ -1,4 +1,4 @@
-# MediaPipeLandmarks 快速开始
+# MediaPipeLandmarksApp 快速开始
 
 ## 环境要求
 
@@ -47,30 +47,28 @@ cd mediapipe_iOS
 ls -la
 
 # 应该看到以下文件和目录：
-# MediaPipeLandmarks/              - 项目目录
-# face_landmarker.task             - 人脸识别模型 (3.6MB)
-# gesture_recognizer.task          - 手势识别模型 (8.4MB)
-# DEVELOPMENT.md                   - 开发文档
-# QUICKSTART.md                    - 本文档
+# MediaPipeLandmarksApp/              - 项目目录
+# DEVELOPMENT.md                      - 开发文档
+# QUICKSTART.md                       - 本文档
 ```
 
 ### 3. 打开项目
 
 ```bash
 # 使用 Xcode 打开项目
-open MediaPipeLandmarks/MediaPipeLandmarks.xcodeproj
+open MediaPipeLandmarksApp/MediaPipeLandmarksApp.xcodeproj
 ```
 
 或者：
-- 双击 `MediaPipeLandmarks.xcodeproj` 文件
+- 双击 `MediaPipeLandmarksApp.xcodeproj` 文件
 - 在 Xcode 中选择 File → Open，选择 `.xcodeproj` 文件
 
 ## 配置项目
 
 ### 1. 配置开发团队 (真机调试必需)
 
-1. 在 Xcode 中选择项目根节点 `MediaPipeLandmarks`
-2. 选择 `TARGETS` → `MediaPipeLandmarks`
+1. 在 Xcode 中选择项目根节点 `MediaPipeLandmarksApp`
+2. 选择 `TARGETS` → `MediaPipeLandmarksApp`
 3. 切换到 `Signing & Capabilities` 标签
 4. 勾选 `Automatically manage signing`
 5. 在 `Team` 下拉菜单中选择你的 Apple ID 或开发团队
@@ -79,12 +77,12 @@ open MediaPipeLandmarks/MediaPipeLandmarks.xcodeproj
 
 如果自动签名失败，修改 Bundle Identifier：
 1. 在 `Signing & Capabilities` 中找到 `Bundle Identifier`
-2. 修改为唯一标识符，例如：`com.yourname.MediaPipeLandmarks`
+2. 修改为唯一标识符，例如：`com.yourname.MediaPipeLandmarksApp`
 
 ### 3. 验证模型文件
 
 确保模型文件已正确添加到项目：
-1. 在 Xcode 左侧导航栏中展开 `MediaPipeLandmarks` → `Models`
+1. 在 Xcode 左侧导航栏中展开 `MediaPipeLandmarksApp` → `MediaPipeLandmarksApp` → `Models`
 2. 应该看到：
    - `face_landmarker.task`
    - `gesture_recognizer.task`
@@ -129,7 +127,13 @@ open MediaPipeLandmarks/MediaPipeLandmarks.xcodeproj
    - 打开设备 `设置` → `通用` → `VPN与设备管理`
    - 找到你的开发者账号，点击 "信任"
 
-6. 返回 Xcode，再次运行项目
+6. **iOS 16+ 设备需要开启开发者模式**：
+   - 打开设备 `设置` → `隐私与安全性` → `开发者模式`
+   - 打开 "开发者模式" 开关
+   - 设备会提示需要重启，点击 "重新启动"
+   - 重启后点击 "打开" 并输入密码确认
+
+7. 返回 Xcode，再次运行项目
 
 ### 使用命令行运行 (高级)
 
@@ -138,14 +142,14 @@ open MediaPipeLandmarks/MediaPipeLandmarks.xcodeproj
 xcrun xctrace list devices
 
 # 编译项目
-xcodebuild -project MediaPipeLandmarks/MediaPipeLandmarks.xcodeproj \
-           -scheme MediaPipeLandmarks \
+xcodebuild -project MediaPipeLandmarksApp/MediaPipeLandmarksApp.xcodeproj \
+           -scheme MediaPipeLandmarksApp \
            -configuration Debug \
            build
 
 # 运行到模拟器
-xcodebuild -project MediaPipeLandmarks/MediaPipeLandmarks.xcodeproj \
-           -scheme MediaPipeLandmarks \
+xcodebuild -project MediaPipeLandmarksApp/MediaPipeLandmarksApp.xcodeproj \
+           -scheme MediaPipeLandmarksApp \
            -destination 'platform=iOS Simulator,name=iPhone 15 Pro' \
            build
 ```
@@ -195,15 +199,104 @@ MediaPipe 预设手势包括：
 **问题**: `import MediaPipeTasksVision` 报错
 
 **解决方案**:
+
+**方案一：清理构建缓存**
 ```bash
-# 方案一：清理构建缓存
 Command + Shift + K (Clean Build Folder)
+```
 
-# 方案二：重置 Xcode 派生数据
+**方案二：重置 Xcode 派生数据**
+```bash
 rm -rf ~/Library/Developer/Xcode/DerivedData
+```
 
-# 方案三：检查是否需要安装 MediaPipe framework
-# 本项目应该已包含，如果缺失，需要从 MediaPipe 官方下载
+**方案三：通过 Swift Package Manager 添加 MediaPipe（完整流程）**
+
+项目使用 MediaPipe Tasks Vision 框架，如果缺少依赖需要添加：
+
+```
+步骤 1：打开项目设置
+1. 在 Xcode 中打开项目
+2. 点击菜单栏 File → Add Package Dependencies...
+   （或者选择项目根节点 → Package Dependencies 标签 → 点击 "+" 按钮）
+
+步骤 2：添加 MediaPipe 仓库
+1. 在搜索框中输入 MediaPipe GitHub 地址：
+   https://github.com/google-ai-edge/mediapipe.git
+   
+2. 点击 "Add Package"
+
+步骤 3：选择版本
+1. 在版本选择界面，选择 "Up to Next Major Version"
+2. 输入版本号：0.10.0（推荐稳定版本）
+3. 点击 "Add Package"
+
+步骤 4：选择产品
+1. 在 Product 列表中，勾选以下框架：
+   ☑ MediaPipeTasksVision（必需）
+   
+2. 点击 "Add Package"
+
+步骤 5：验证安装
+1. 等待 SPM 下载并解析依赖（进度条在 Xcode 右上角）
+2. 完成后，在项目导航器中可以看到：
+   Package Dependencies
+   └── mediapipe（绿色立方体图标）
+
+步骤 6：清理并重新编译
+1. Product → Clean Build Folder (Command + Shift + K)
+2. 重新编译：Command + B
+```
+
+**注意**：官方 MediaPipe Tasks Vision 首选 CocoaPods 安装。如果使用 SPM 遇到问题，可改用 CocoaPods：
+
+```ruby
+# Podfile
+platform :ios, '15.0'
+target 'MediaPipeLandmarksApp' do
+  use_frameworks!
+  pod 'MediaPipeTasksVision', '~> 0.10.0'
+end
+```
+
+然后执行 `pod install` 并打开 `.xcworkspace` 文件。
+
+**常见问题**：
+
+Q1: SPM 下载失败/网络超时
+```
+解决方案：
+1. 检查网络连接，确保能访问 GitHub
+2. 尝试切换网络环境（如使用手机热点）
+3. 在终端执行以下命令刷新 SPM 缓存：
+   xcodebuild -resolvePackageDependencies -clean
+4. 删除 SPM 缓存后重试：
+   rm -rf ~/Library/org.swift.swiftpm
+   rm -rf ~/Library/Caches/org.swift.swiftpm
+```
+
+Q2: 添加后仍然报错 "No such module"
+```
+解决方案：
+1. 确认 MediaPipeTasksVision 已添加到 Target 依赖：
+   - 点击项目根节点 → 选择 Target → Build Phases
+   - 展开 "Link Binary With Libraries"
+   - 确认有 MediaPipeTasksVision.framework
+   
+2. 检查 Framework Search Paths：
+   - Target → Build Settings
+   - 搜索 "Framework Search Paths"
+   - 确保包含 $(BUILD_DIR)/SwiftPackageManager/PackageFrameworks
+
+3. 重新关闭并打开 Xcode 项目
+```
+
+Q3: 版本冲突或 API 不兼容
+```
+解决方案：
+1. 如果代码使用旧版 API（如 faceLandmarksConnections），使用 MediaPipe 0.10.x 版本
+2. 如果使用新版 API，更新代码或降级 SPM 版本
+3. 在 Package Dependencies 中右键点击 mediapipe → Update Package 可切换版本
 ```
 
 ### 2. 相机权限被拒绝
@@ -212,7 +305,7 @@ rm -rf ~/Library/Developer/Xcode/DerivedData
 
 **解决方案**:
 1. 打开设备 `设置` → `隐私与安全性` → `相机`
-2. 找到 `MediaPipeLandmarks`，开启权限
+2. 找到 `MediaPipeLandmarksApp`，开启权限
 3. 重启应用
 
 ### 3. 模型文件找不到
@@ -226,10 +319,10 @@ rm -rf ~/Library/Developer/Xcode/DerivedData
    ```
 
 2. 在 Xcode 中重新添加文件：
-   - 右键点击 `Models` 文件夹 → `Add Files to "MediaPipeLandmarks"`
+   - 右键点击 `Models` 文件夹 → `Add Files to "MediaPipeLandmarksApp"`
    - 选择 `face_landmarker.task` 和 `gesture_recognizer.task`
    - 勾选 `Copy items if needed`
-   - 勾选 `MediaPipeLandmarks` target
+   - 勾选 `MediaPipeLandmarksApp` target
    - 点击 `Add`
 
 ### 4. 真机运行失败：开发者证书问题
@@ -293,6 +386,74 @@ Command + I (Profile)
 # - Time Profiler: CPU 使用率
 # - Allocations: 内存分配
 # - Leaks: 内存泄漏
+```
+
+### 高级调试工具
+
+#### View Hierarchy Debugger（视图层级调试器）
+
+用于检查 UI 层级和 OverlayView 绘制问题：
+
+```
+使用方法：
+1. 运行应用到人脸或手势识别界面
+2. 点击 Xcode 底部调试栏的 "Debug View Hierarchy" 按钮
+   （或菜单栏 Debug → View Debugging → Capture View Hierarchy）
+3. Xcode 会显示 3D 视图层级
+4. 可以：
+   - 旋转视图查看层级关系
+   - 检查 FaceOverlayView/HandOverlayView 是否正确覆盖在相机预览层上
+   - 查看每个视图的 frame、bounds、alpha 等属性
+   - 确认关键点绘制层是否被其他视图遮挡
+```
+
+**常见用途**：
+- 关键点不显示 → 检查 OverlayView 的 z-index 和 alpha
+- 绘制位置偏移 → 检查 frame 和坐标转换
+- 性能问题 → 检查是否有过多的视图层级
+
+#### Memory Graph Debugger（内存图调试器）
+
+用于排查 MediaPipe 内存占用和泄漏问题：
+
+```
+使用方法：
+1. 运行应用并使用一段时间（切换人脸/手势识别）
+2. 点击 Xcode 底部调试栏的 "Debug Memory Graph" 按钮
+   （或菜单栏 Debug → Memory Graph）
+3. Xcode 会暂停应用并显示内存图
+4. 可以：
+   - 查看所有对象的内存占用
+   - 检查 FaceLandmarkerService/GestureRecognizerService 是否正确释放
+   - 查找循环引用（紫色感叹号标记）
+   - 检查 CMSampleBuffer 是否及时释放
+```
+
+**常见用途**：
+- 内存持续增长 → 检查 Service 类的 delegate 是否使用 weak
+- 切换界面后内存未释放 → 检查 ViewController 是否被强引用
+- MediaPipe 模型占用过高 → 检查是否创建了多个 Landmarker 实例
+
+#### LLDB 调试命令
+
+在断点暂停时，可以在控制台使用 LLDB 命令：
+
+```bash
+# 打印变量值
+(lldb) po landmarks
+(lldb) po imageSize
+
+# 查看对象类型
+(lldb) expr -O -- self
+
+# 修改变量值（用于测试）
+(lldb) expr numFaces = 2
+
+# 查看当前调用栈
+(lldb) bt
+
+# 继续执行
+(lldb) continue
 ```
 
 ## 下一步

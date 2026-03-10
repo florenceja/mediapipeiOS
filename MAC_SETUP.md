@@ -2,7 +2,7 @@
 
 ## 概述
 
-本指南帮助你将在 Windows 上创建的 MediaPipeLandmarks iOS 项目迁移到 Mac 上进行开发和调试。
+本指南帮助你将在 Windows 上创建的 MediaPipeLandmarksApp iOS 项目迁移到 Mac 上进行开发和调试。
 
 ## 前置准备
 
@@ -33,10 +33,10 @@ git push -u origin main
 确保以下文件都包含在内：
 ```
 mediapipe_iOS/
-├── MediaPipeLandmarks/
-│   ├── MediaPipeLandmarks.xcodeproj/
+├── MediaPipeLandmarksApp/
+│   ├── MediaPipeLandmarksApp.xcodeproj/
 │   │   └── project.pbxproj          ← 重要：Xcode 项目配置
-│   └── MediaPipeLandmarks/
+│   └── MediaPipeLandmarksApp/
 │       ├── Controllers/
 │       ├── Services/
 │       ├── Views/
@@ -188,13 +188,13 @@ tree -L 3
 find . -maxdepth 3 -type d
 
 # 检查关键文件
-ls -lh MediaPipeLandmarks/MediaPipeLandmarks/Models/
+ls -lh MediaPipeLandmarksApp/MediaPipeLandmarksApp/Models/
 # 应该看到：
 # face_landmarker.task (约 3.6MB)
 # gesture_recognizer.task (约 8.4MB)
 
 # 检查 Xcode 项目文件
-ls -la MediaPipeLandmarks/MediaPipeLandmarks.xcodeproj/
+ls -la MediaPipeLandmarksApp/MediaPipeLandmarksApp.xcodeproj/
 # 应该看到 project.pbxproj 文件
 ```
 
@@ -209,14 +209,14 @@ ls -la MediaPipeLandmarks/MediaPipeLandmarks.xcodeproj/
 cd ~/Projects/mediapipe_iOS
 
 # 打开 Xcode 项目
-open MediaPipeLandmarks/MediaPipeLandmarks.xcodeproj
+open MediaPipeLandmarksApp/MediaPipeLandmarksApp.xcodeproj
 ```
 
 #### 方式二：使用 Finder
 
 1. 打开 Finder
-2. 导航到 `~/Projects/mediapipe_iOS/MediaPipeLandmarks/`
-3. 双击 `MediaPipeLandmarks.xcodeproj` 文件
+2. 导航到 `~/Projects/mediapipe_iOS/MediaPipeLandmarksApp/`
+3. 双击 `MediaPipeLandmarksApp.xcodeproj` 文件
 4. Xcode 会自动启动并打开项目
 
 ---
@@ -231,8 +231,8 @@ Xcode 打开后，你会看到项目导航器（左侧边栏）。
 
 ```
 步骤：
-1. 点击左侧导航器中的项目根节点 "MediaPipeLandmarks"（蓝色图标）
-2. 在中间区域选择 TARGETS → MediaPipeLandmarks
+1. 点击左侧导航器中的项目根节点 "MediaPipeLandmarksApp"（蓝色图标）
+2. 在中间区域选择 TARGETS → MediaPipeLandmarksApp
 3. 点击顶部的 "Signing & Capabilities" 标签
 4. 勾选 "Automatically manage signing"
 5. 在 "Team" 下拉菜单中：
@@ -261,10 +261,10 @@ Xcode 打开后，你会看到项目导航器（左侧边栏）。
 ```
 步骤：
 1. 在 "Signing & Capabilities" 中找到 "Bundle Identifier"
-2. 当前值：com.example.MediaPipeLandmarks
+2. 当前值：com.example.MediaPipeLandmarksApp
 3. 修改为唯一标识符，例如：
-   com.yourname.MediaPipeLandmarks
-   com.yourdomain.MediaPipeLandmarks
+   com.yourname.MediaPipeLandmarksApp
+   com.yourdomain.MediaPipeLandmarksApp
 ```
 
 #### 5. 验证模型文件
@@ -272,15 +272,15 @@ Xcode 打开后，你会看到项目导航器（左侧边栏）。
 ```
 步骤：
 1. 在左侧导航器中展开：
-   MediaPipeLandmarks → MediaPipeLandmarks → Models
+   MediaPipeLandmarksApp → MediaPipeLandmarksApp → Models
 2. 应该看到两个文件：
    - face_landmarker.task
    - gesture_recognizer.task
 3. 如果文件显示为红色（找不到）：
-   a. 右键点击 Models 文件夹 → Add Files to "MediaPipeLandmarks"
+   a. 右键点击 Models 文件夹 → Add Files to "MediaPipeLandmarksApp"
    b. 导航到项目根目录，选择两个 .task 文件
    c. 勾选 "Copy items if needed"
-   d. 勾选 "MediaPipeLandmarks" target
+   d. 勾选 "MediaPipeLandmarksApp" target
    e. 点击 "Add"
 ```
 
@@ -346,7 +346,25 @@ Xcode 打开后，你会看到项目导航器（左侧边栏）。
 5. 在弹出的确认对话框中点击 "信任"
 ```
 
-##### 5. 重新运行
+##### 5. 开启开发者模式（iOS 16+ 必需）
+
+**重要**：从 iOS 16 开始，真机调试前必须手动开启开发者模式。
+
+```
+在 iPhone/iPad 上操作：
+1. 打开 "设置" 应用
+2. 滚动到 "隐私与安全性" → "开发者模式"
+3. 打开 "开发者模式" 开关
+4. 设备会提示需要重启，点击 "重新启动"
+5. 重启后会弹出确认对话框，点击 "打开"
+6. 输入设备密码确认
+```
+
+**注意**：如果在 "隐私与安全性" 中找不到 "开发者模式" 选项，说明：
+- 设备系统版本低于 iOS 16（无需此步骤）
+- 或者需要先通过 Xcode 运行一次应用，系统会自动显示该选项
+
+##### 6. 重新运行
 
 ```
 步骤：
@@ -468,20 +486,20 @@ rm -rf ~/Library/Developer/Xcode/DerivedData
 ```bash
 # 1. 确认文件存在
 cd ~/Projects/mediapipe_iOS
-ls -lh MediaPipeLandmarks/MediaPipeLandmarks/Models/
+ls -lh MediaPipeLandmarksApp/MediaPipeLandmarksApp/Models/
 
 # 2. 如果文件不存在，从项目根目录复制
-cp face_landmarker.task MediaPipeLandmarks/MediaPipeLandmarks/Models/
-cp gesture_recognizer.task MediaPipeLandmarks/MediaPipeLandmarks/Models/
+cp face_landmarker.task MediaPipeLandmarksApp/MediaPipeLandmarksApp/Models/
+cp gesture_recognizer.task MediaPipeLandmarksApp/MediaPipeLandmarksApp/Models/
 ```
 
 在 Xcode 中重新添加：
 ```
 步骤：
-1. 右键点击 Models 文件夹 → Add Files to "MediaPipeLandmarks"
+1. 右键点击 Models 文件夹 → Add Files to "MediaPipeLandmarksApp"
 2. 选择两个 .task 文件
 3. 勾选 "Copy items if needed"
-4. 勾选 "MediaPipeLandmarks" target
+4. 勾选 "MediaPipeLandmarksApp" target
 5. 点击 "Add"
 6. 重新编译运行
 ```
@@ -523,10 +541,10 @@ cp gesture_recognizer.task MediaPipeLandmarks/MediaPipeLandmarks/Models/
 **解决方案**：
 
 ```
-在 iPhone/iPad 上：
+在设备上：
 1. 打开 "设置" 应用
 2. 滚动到 "隐私与安全性" → "相机"
-3. 找到 "MediaPipeLandmarks"
+3. 找到 "MediaPipeLandmarksApp"
 4. 开启权限开关
 5. 返回应用，重新启动
 ```
@@ -605,7 +623,7 @@ cp gesture_recognizer.task MediaPipeLandmarks/MediaPipeLandmarks/Models/
 ```bash
 # 打开项目
 cd ~/Projects/mediapipe_iOS
-open MediaPipeLandmarks/MediaPipeLandmarks.xcodeproj
+open MediaPipeLandmarksApp/MediaPipeLandmarksApp.xcodeproj
 
 # 清理构建缓存
 rm -rf ~/Library/Developer/Xcode/DerivedData
@@ -614,11 +632,11 @@ rm -rf ~/Library/Developer/Xcode/DerivedData
 tree -L 3
 
 # 检查模型文件
-ls -lh MediaPipeLandmarks/MediaPipeLandmarks/Models/
+ls -lh MediaPipeLandmarksApp/MediaPipeLandmarksApp/Models/
 
 # 使用命令行编译（高级）
-xcodebuild -project MediaPipeLandmarks/MediaPipeLandmarks.xcodeproj \
-           -scheme MediaPipeLandmarks \
+xcodebuild -project MediaPipeLandmarksApp/MediaPipeLandmarksApp.xcodeproj \
+           -scheme MediaPipeLandmarksApp \
            -configuration Debug \
            build
 
@@ -635,9 +653,10 @@ xcrun xctrace list devices
 1. **Windows 端**：打包项目（Git/压缩包/云存储）
 2. **Mac 端**：安装 Xcode + Command Line Tools
 3. **传输**：通过 Git/云存储/U 盘传输项目
-4. **打开**：`open MediaPipeLandmarks.xcodeproj`
+4. **打开**：`open MediaPipeLandmarksApp/MediaPipeLandmarksApp.xcodeproj`
 5. **配置**：添加 Apple ID，配置开发团队
 6. **运行**：选择模拟器或真机，点击运行按钮
-7. **测试**：授权相机权限，测试人脸和手势识别
+7. **iOS 16+ 真机**：开启开发者模式（设置 → 隐私与安全性 → 开发者模式）
+8. **测试**：授权相机权限，测试人脸和手势识别
 
 如遇到问题，参考上方 "常见问题排查" 章节。

@@ -35,7 +35,7 @@ class FaceOverlayView: UIView {
         
         for face in faceLandmarks {
             // Draw connections
-            for connection in FaceLandmarksConnections.connections() {
+            for connection in FaceLandmarker.faceConnections() {
                 let start = face[Int(connection.start)]
                 let end = face[Int(connection.end)]
                 

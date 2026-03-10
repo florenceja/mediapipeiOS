@@ -128,6 +128,7 @@ open MediaPipeLandmarksApp/MediaPipeLandmarksApp.xcodeproj
 **解决方案**：
 - 配置开发团队（Signing & Capabilities）
 - 在设备上信任开发者证书：设置 → 通用 → VPN与设备管理
+- **iOS 16+ 设备**：需要开启开发者模式（设置 → 隐私与安全性 → 开发者模式）
 
 详细故障排查请查看 [MAC_SETUP.md](MAC_SETUP.md)
 
