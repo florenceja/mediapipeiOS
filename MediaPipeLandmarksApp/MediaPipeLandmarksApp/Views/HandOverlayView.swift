@@ -14,7 +14,7 @@ class HandOverlayView: UIView {
     
     // 数据结构修正：单只手 = [NormalizedLandmark]，多只手 = [[NormalizedLandmark]]
     private var handLandmarks: [[NormalizedLandmark]] = []
-    private var gestures: [[Category]] = []
+    private var gestures: [[ResultCategory]] = []
     private var imageSize: CGSize = .zero
     
     override init(frame: CGRect) {
@@ -27,10 +27,10 @@ class HandOverlayView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func draw(landmarks: [[[NormalizedLandmark]]], gestures: [[[Category]]], imageSize: CGSize) {
+    func draw(landmarks: [[NormalizedLandmark]], gestures: [[ResultCategory]], imageSize: CGSize) {
         // 适配原接口：取第一只手的数据
-        self.handLandmarks = landmarks.first ?? []
-        self.gestures = gestures.first ?? []
+        self.handLandmarks = landmarks
+        self.gestures = gestures
         self.imageSize = imageSize
         setNeedsDisplay()
     }
@@ -92,13 +92,13 @@ class HandOverlayView: UIView {
                 let gestureCategories = gestures[handIndex]
                 if let topCategory = gestureCategories.max(by: {
                     // 通过 KVC 安全获取 score（适配 OpaquePointer）
-                    let score1 = $0.value(forKey: "score") as? Float ?? 0
-                    let score2 = $1.value(forKey: "score") as? Float ?? 0
+                    let score1 = ($0 as AnyObject).value(forKey: "score") as? Float ?? 0
+                    let score2 = ($1 as AnyObject).value(forKey: "score") as? Float ?? 0
                     return score1 < score2
                 }) {
                     // 通过 KVC 获取 categoryName/label（适配 OpaquePointer）
-                    let categoryName = topCategory.value(forKey: "categoryName") as? String
-                    let label = topCategory.value(forKey: "label") as? String
+                    let categoryName = (topCategory as AnyObject).value(forKey: "categoryName") as? String
+                    let label = (topCategory as AnyObject).value(forKey: "label") as? String
                     let text = categoryName ?? label ?? "Unknown"
                     
                     let attributes: [NSAttributedString.Key: Any] = [
