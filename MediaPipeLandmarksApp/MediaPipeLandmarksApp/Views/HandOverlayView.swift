@@ -91,9 +91,16 @@ class HandOverlayView: UIView {
             if handIndex < gestures.count {
                 let gestureCategories = gestures[handIndex]
                 if let topCategory = gestureCategories.max(by: {
-                    $0.score < $1.score
+                    let score1 = ($0 as AnyObject).value(forKey: "score") as? Float ?? 0
+                    let score2 = ($1 as AnyObject).value(forKey: "score") as? Float ?? 0
+                    return score1 < score2
                 }) {
-                    let text = topCategory.categoryName.isEmpty ? "Unknown" : topCategory.categoryName
+                    let categoryName = (topCategory as AnyObject).value(forKey: "categoryName") as? String
+                    let displayName = (topCategory as AnyObject).value(forKey: "displayName") as? String
+                    let label = (topCategory as AnyObject).value(forKey: "label") as? String
+                    let text = [categoryName, displayName, label]
+                        .compactMap { $0 }
+                        .first(where: { !$0.isEmpty }) ?? "Unknown"
                     
                     let attributes: [NSAttributedString.Key: Any] = [
                         .font: UIFont.boldSystemFont(ofSize: 24),
