@@ -1,0 +1,331 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 54;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		C3D717BD4E3A492CB715DF59 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F7043487366485097C63145 /* AppDelegate.swift */; };
+		F344F45F46CA4EB2BC77E84E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4A01CA686E541BFAF034C5F /* SceneDelegate.swift */; };
+		24E6D50C36104A30B761D0CA /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CF22A6AA3664FEA9BF170D4 /* MainViewController.swift */; };
+		0A2C7726D033496D94F7D372 /* FaceDetectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91451BC9927141BFA3AEB06B /* FaceDetectionViewController.swift */; };
+		A2D6A8DDC2124BDAB70A1B62 /* HandGestureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC34FA7F3F6A4EF3B9D65CE0 /* HandGestureViewController.swift */; };
+		4C56B5B2382E494988981D25 /* CameraManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C47FE137F04402AAE11D56 /* CameraManager.swift */; };
+		F8C2633E158A4DFCB4A5C52D /* FaceLandmarkerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE2620FB941B4AA283F3F0E5 /* FaceLandmarkerService.swift */; };
+		E2A77842AC084973ADD54B97 /* GestureRecognizerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FAB9F6D7F024658A4B097D5 /* GestureRecognizerService.swift */; };
+		72BDA9A3D8924A1AB1F89F6B /* FaceOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5433730DFB642AC800CD493 /* FaceOverlayView.swift */; };
+		A3AD96A545A44145A9E28F6F /* HandOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA02E4FBA14A4E4FA841D89A /* HandOverlayView.swift */; };
+		B20305B08D56491E8A0EA1EF /* CoordinateTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D7B7955872141F49A25C8B3 /* CoordinateTransformer.swift */; };
+		3D61189B4899492A986F8799 /* face_landmarker.task in Resources */ = {isa = PBXBuildFile; fileRef = 9015122E60DE42D8B1BDEE7E /* face_landmarker.task */; };
+		36C6FCB2D4EF42B495EDEEFA /* gesture_recognizer.task in Resources */ = {isa = PBXBuildFile; fileRef = D7DF3FA4F6DD4926B4DBCA9A /* gesture_recognizer.task */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		5F7043487366485097C63145 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		B4A01CA686E541BFAF034C5F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		D60C29DBEA9942E8A6C2256D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1CF22A6AA3664FEA9BF170D4 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		91451BC9927141BFA3AEB06B /* FaceDetectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceDetectionViewController.swift; sourceTree = "<group>"; };
+		CC34FA7F3F6A4EF3B9D65CE0 /* HandGestureViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandGestureViewController.swift; sourceTree = "<group>"; };
+		60C47FE137F04402AAE11D56 /* CameraManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraManager.swift; sourceTree = "<group>"; };
+		FE2620FB941B4AA283F3F0E5 /* FaceLandmarkerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceLandmarkerService.swift; sourceTree = "<group>"; };
+		7FAB9F6D7F024658A4B097D5 /* GestureRecognizerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GestureRecognizerService.swift; sourceTree = "<group>"; };
+		C5433730DFB642AC800CD493 /* FaceOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceOverlayView.swift; sourceTree = "<group>"; };
+		AA02E4FBA14A4E4FA841D89A /* HandOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandOverlayView.swift; sourceTree = "<group>"; };
+		9D7B7955872141F49A25C8B3 /* CoordinateTransformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinateTransformer.swift; sourceTree = "<group>"; };
+		9015122E60DE42D8B1BDEE7E /* face_landmarker.task */ = {isa = PBXFileReference; lastKnownFileType = file; path = face_landmarker.task; sourceTree = "<group>"; };
+		D7DF3FA4F6DD4926B4DBCA9A /* gesture_recognizer.task */ = {isa = PBXFileReference; lastKnownFileType = file; path = gesture_recognizer.task; sourceTree = "<group>"; };
+		39ED69C7940448C697798877 /* MediaPipeLandmarksApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MediaPipeLandmarksApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		4A63EBE33B3A4E1AB649C3BA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		16B9EB74B2DD4500ACB763FD = {
+			isa = PBXGroup;
+			children = (
+				A8AED8F1FE67473BB27FCA03 /* MediaPipeLandmarksApp */,
+				C8B9785386714787B8F6BDCD /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		C8B9785386714787B8F6BDCD /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				39ED69C7940448C697798877 /* MediaPipeLandmarksApp.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A8AED8F1FE67473BB27FCA03 /* MediaPipeLandmarksApp */ = {
+			isa = PBXGroup;
+			children = (
+				5F7043487366485097C63145 /* AppDelegate.swift */,
+				B4A01CA686E541BFAF034C5F /* SceneDelegate.swift */,
+				D60C29DBEA9942E8A6C2256D /* Info.plist */,
+				9930CEA206414757B2E6FFE1 /* Controllers */,
+				2BFB8F6C33174CA3A63F48F6 /* Services */,
+				F26184707A2A48249D606B86 /* Views */,
+				0B82B534F09F4C43AA61249F /* Utils */,
+				B525440DDDD74CDF96FBDEE3 /* Models */,
+			);
+			path = MediaPipeLandmarksApp;
+			sourceTree = "<group>";
+		};
+		9930CEA206414757B2E6FFE1 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				1CF22A6AA3664FEA9BF170D4 /* MainViewController.swift */,
+				91451BC9927141BFA3AEB06B /* FaceDetectionViewController.swift */,
+				CC34FA7F3F6A4EF3B9D65CE0 /* HandGestureViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		2BFB8F6C33174CA3A63F48F6 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				60C47FE137F04402AAE11D56 /* CameraManager.swift */,
+				FE2620FB941B4AA283F3F0E5 /* FaceLandmarkerService.swift */,
+				7FAB9F6D7F024658A4B097D5 /* GestureRecognizerService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		F26184707A2A48249D606B86 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				C5433730DFB642AC800CD493 /* FaceOverlayView.swift */,
+				AA02E4FBA14A4E4FA841D89A /* HandOverlayView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		0B82B534F09F4C43AA61249F /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				9D7B7955872141F49A25C8B3 /* CoordinateTransformer.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		B525440DDDD74CDF96FBDEE3 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				9015122E60DE42D8B1BDEE7E /* face_landmarker.task */,
+				D7DF3FA4F6DD4926B4DBCA9A /* gesture_recognizer.task */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		870380E5F17742948CF9BD38 /* MediaPipeLandmarksApp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A848FFC0ABCF422A963D927A /* Build configuration list for PBXNativeTarget "MediaPipeLandmarksApp" */;
+			buildPhases = (
+				7C75A4B2EFA14197A3D955B6 /* Sources */,
+				4A63EBE33B3A4E1AB649C3BA /* Frameworks */,
+				DB6844900B3340A099C4C23D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MediaPipeLandmarksApp;
+			productName = MediaPipeLandmarksApp;
+			productReference = 39ED69C7940448C697798877 /* MediaPipeLandmarksApp.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		EDB241B05917463AB9B8939A /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 1400;
+				TargetAttributes = {
+					870380E5F17742948CF9BD38 = {
+						CreatedOnToolsVersion = 14.0;
+					};
+				};
+			};
+			buildConfigurationList = D52F97F4BCF241C9952B3BCF /* Build configuration list for PBXProject "MediaPipeLandmarksApp" */;
+			compatibilityVersion = "Xcode 13.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 16B9EB74B2DD4500ACB763FD;
+			productRefGroup = C8B9785386714787B8F6BDCD /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				870380E5F17742948CF9BD38 /* MediaPipeLandmarksApp */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		DB6844900B3340A099C4C23D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3D61189B4899492A986F8799 /* face_landmarker.task in Resources */,
+				36C6FCB2D4EF42B495EDEEFA /* gesture_recognizer.task in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		7C75A4B2EFA14197A3D955B6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C3D717BD4E3A492CB715DF59 /* AppDelegate.swift in Sources */,
+				F344F45F46CA4EB2BC77E84E /* SceneDelegate.swift in Sources */,
+				24E6D50C36104A30B761D0CA /* MainViewController.swift in Sources */,
+				0A2C7726D033496D94F7D372 /* FaceDetectionViewController.swift in Sources */,
+				A2D6A8DDC2124BDAB70A1B62 /* HandGestureViewController.swift in Sources */,
+				4C56B5B2382E494988981D25 /* CameraManager.swift in Sources */,
+				F8C2633E158A4DFCB4A5C52D /* FaceLandmarkerService.swift in Sources */,
+				E2A77842AC084973ADD54B97 /* GestureRecognizerService.swift in Sources */,
+				72BDA9A3D8924A1AB1F89F6B /* FaceOverlayView.swift in Sources */,
+				A3AD96A545A44145A9E28F6F /* HandOverlayView.swift in Sources */,
+				B20305B08D56491E8A0EA1EF /* CoordinateTransformer.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		AC98D9E7733440E28B016006 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_MODULES = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		8414AB84688F4B549D018D9E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_MODULES = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		84E018B7AA5A405EB1950E9E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = MediaPipeLandmarksApp/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.MediaPipeLandmarksApp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		C6BBDF289A254B24919BB366 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = MediaPipeLandmarksApp/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.MediaPipeLandmarksApp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		D52F97F4BCF241C9952B3BCF /* Build configuration list for PBXProject "MediaPipeLandmarksApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AC98D9E7733440E28B016006 /* Debug */,
+				8414AB84688F4B549D018D9E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A848FFC0ABCF422A963D927A /* Build configuration list for PBXNativeTarget "MediaPipeLandmarksApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				84E018B7AA5A405EB1950E9E /* Debug */,
+				C6BBDF289A254B24919BB366 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = EDB241B05917463AB9B8939A /* Project object */;
+}
