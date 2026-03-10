@@ -63,7 +63,7 @@ extension HandGestureViewController: GestureRecognizerServiceDelegate {
         guard let result = result, error == nil else { return }
         
         DispatchQueue.main.async {
-            self.overlayView.draw(landmarks: result.landmarks, gestures: result.gestures as! [Category] as! [[Category]], imageSize: imageSize)
+            self.overlayView.draw(landmarks: result.landmarks, gestures: result.gestures, imageSize: imageSize)
         }
     }
 }

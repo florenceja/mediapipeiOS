@@ -3,8 +3,8 @@ import MediaPipeTasksVision
 
 class HandOverlayView: UIView {
     
-    private var handLandmarks: [[NormalizedLandmark]] = []
-    private var gestures: [[Category]] = []
+    private var handLandmarks: [[[NormalizedLandmark]]] = []
+    private var gestures: [[[Category]]] = []
     private var imageSize: CGSize = .zero
     
     override init(frame: CGRect) {
@@ -17,7 +17,7 @@ class HandOverlayView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func draw(landmarks: [[NormalizedLandmark]], gestures: [[Category]], imageSize: CGSize) {
+    func draw(landmarks: [[[NormalizedLandmark]]], gestures: [[[Category]]], imageSize: CGSize) {
         self.handLandmarks = landmarks
         self.gestures = gestures
         self.imageSize = imageSize
@@ -35,7 +35,7 @@ class HandOverlayView: UIView {
         context.setLineWidth(2.0)
         context.setFillColor(UIColor.orange.cgColor)
         
-        for (index, hand) in handLandmarks.enumerated() {
+        for (handIndex, hand) in handLandmarks.enumerated() {
             // Draw connections
             for connection in HandLandmarker.handConnections {
                 let start = hand[Int(connection.start)]
@@ -77,17 +77,20 @@ class HandOverlayView: UIView {
             }
             
             // Draw gesture name
-            if index < gestures.count, let firstGesture = gestures[index].first {
-                let text = firstGesture.displayName ?? "Unknown"
-                let attributes: [NSAttributedString.Key: Any] = [
-                    .font: UIFont.boldSystemFont(ofSize: 24),
-                    .foregroundColor: UIColor.red
-                ]
+            if handIndex < gestures.count, let gestureCategories = gestures[handIndex].first {
+                // Get the category with highest score
+                if let topCategory = gestureCategories.max(by: { $0.score < $1.score }) {
+                    let text = topCategory.categoryName ?? "Unknown"
+                    let attributes: [NSAttributedString.Key: Any] = [
+                        .font: UIFont.boldSystemFont(ofSize: 24),
+                        .foregroundColor: UIColor.red
+                    ]
                 
-                let textSize = text.size(withAttributes: attributes)
-                let textRect = CGRect(x: minX, y: minY - textSize.height - 10, width: textSize.width, height: textSize.height)
-                
-                text.draw(in: textRect, withAttributes: attributes)
+                    let textSize = text.size(withAttributes: attributes)
+                    let textRect = CGRect(x: minX, y: minY - textSize.height - 10, width: textSize.width, height: textSize.height)
+                    
+                    text.draw(in: textRect, withAttributes: attributes)
+                }
             }
         }
     }

@@ -9,10 +9,15 @@
   - 根据 MediaPipe Tasks Vision v0.10.0+ API，连接常量现由 Task 类直接提供
 
 #### HandOverlayView.swift
+- **第 6-7 行**：修正数据类型为三层数组
+  - `[[NormalizedLandmark]]` → `[[[NormalizedLandmark]]]`
+  - `[[Category]]` → `[[[Category]]]`
+- **第 20 行**：更新 draw 方法签名，匹配三层数组
 - **第 40 行**：`HandLandmarksCo()` → `HandLandmarker.handConnections`
-  - 修复了不完整的函数名，使用正确的 API
-- **第 87 行**：`Category.categoryName` → `Category.displayName`
-  - 修复了获取类别名称的属性名
+- **第 80-93 行**：修复手势名称获取逻辑
+  - 正确访问三层数组结构
+  - 使用 `max(by:)` 获取最高置信度的类别
+  - 使用 `topCategory.categoryName` 获取名称
 
 ### 2. 项目配置修复
 - 移除了无效的 `[CP] Check Pods Manifest.lock` build phase
