@@ -3,7 +3,7 @@ import MediaPipeTasksVision
 
 class HandOverlayView: UIView {
     
-    // 1. 定义手部关键点连接（MediaPipe 官方手部骨架连接）
+    // 手部骨架连接（MediaPipe 官方 21 点连接）
     private let handConnections: [(start: Int, end: Int)] = [
         (0, 1), (1, 2), (2, 3), (3, 4),   // 拇指
         (0, 5), (5, 6), (6, 7), (7, 8),   // 食指
@@ -12,8 +12,9 @@ class HandOverlayView: UIView {
         (0, 17), (17, 18), (18, 19), (19, 20)  // 小指
     ]
     
-    private var handLandmarks: [[NormalizedLandmark]] = [] // 简化：单只手的关键点数组
-    private var gestures: [Category] = [] // 简化：单只手的手势分类结果
+    // 数据结构修正：单只手 = [NormalizedLandmark]，多只手 = [[NormalizedLandmark]]
+    private var handLandmarks: [[NormalizedLandmark]] = []
+    private var gestures: [[Category]] = []
     private var imageSize: CGSize = .zero
     
     override init(frame: CGRect) {
@@ -26,10 +27,10 @@ class HandOverlayView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // 2. 简化数据传递接口（适配实际业务逻辑）
-    func update(with landmarks: [[NormalizedLandmark]], gestures: [Category], imageSize: CGSize) {
-        self.handLandmarks = landmarks
-        self.gestures = gestures
+    func draw(landmarks: [[[NormalizedLandmark]]], gestures: [[[Category]]], imageSize: CGSize) {
+        // 适配原接口：取第一只手的数据
+        self.handLandmarks = landmarks.first ?? []
+        self.gestures = gestures.first ?? []
         self.imageSize = imageSize
         setNeedsDisplay()
     }
@@ -37,79 +38,85 @@ class HandOverlayView: UIView {
     override func draw(_ rect: CGRect) {
         super.draw(rect)
         
-        // 3. 安全校验：关键点/图像尺寸为空时直接返回
-        guard !handLandmarks.isEmpty, imageSize.width > 0, imageSize.height > 0 else { return }
+        guard !handLandmarks.isEmpty, imageSize != .zero else { return }
         guard let context = UIGraphicsGetCurrentContext() else { return }
         
-        // 4. 设置绘制样式
         context.setStrokeColor(UIColor.blue.cgColor)
         context.setLineWidth(2.0)
         context.setFillColor(UIColor.orange.cgColor)
         
-        // 5. 绘制手部骨架连接
-        for connection in handConnections {
-            guard connection.start < handLandmarks.count, connection.end < handLandmarks.count else { continue }
+        for (handIndex, hand) in handLandmarks.enumerated() {
+            // 绘制骨架连接
+            for connection in handConnections {
+                guard connection.start < hand.count, connection.end < hand.count else { continue }
+                
+                let startLandmark = hand[connection.start]
+                let endLandmark = hand[connection.end]
+                
+                // ✅ 正确访问单个 NormalizedLandmark 的 x/y（通过属性）
+                let startPoint = CoordinateTransformer.point(
+                    from: CGPoint(x: CGFloat(startLandmark.x), y: CGFloat(startLandmark.y)),
+                    imageSize: imageSize,
+                    viewSize: bounds.size
+                )
+                let endPoint = CoordinateTransformer.point(
+                    from: CGPoint(x: CGFloat(endLandmark.x), y: CGFloat(endLandmark.y)),
+                    imageSize: imageSize,
+                    viewSize: bounds.size
+                )
+                
+                context.move(to: startPoint)
+                context.addLine(to: endPoint)
+            }
+            context.strokePath()
             
-            let startLandmark = handLandmarks[connection.start]
-            let endLandmark = handLandmarks[connection.end]
+            // 绘制关键点
+            var minX: CGFloat = bounds.width
+            var minY: CGFloat = bounds.height
             
-            // 6. 正确转换 NormalizedLandmark 坐标（适配 MediaPipe API）
-            let startPoint = CoordinateTransformer.point(
-                from: CGPoint(x: CGFloat(startLandmark.x), y: CGFloat(startLandmark.y)),
-                imageSize: imageSize,
-                viewSize: bounds.size
-            )
+            for landmark in hand {
+                let point = CoordinateTransformer.point(
+                    from: CGPoint(x: CGFloat(landmark.x), y: CGFloat(landmark.y)),
+                    imageSize: imageSize,
+                    viewSize: bounds.size
+                )
+                let rect = CGRect(x: point.x - 3, y: point.y - 3, width: 6, height: 6)
+                context.fillEllipse(in: rect)
+                
+                minX = min(minX, point.x)
+                minY = min(minY, point.y)
+            }
             
-            let endPoint = CoordinateTransformer.point(
-                from: CGPoint(x: CGFloat(endLandmark.x), y: CGFloat(endLandmark.y)),
-                imageSize: imageSize,
-                viewSize: bounds.size
-            )
-            
-            context.move(to: startPoint)
-            context.addLine(to: endPoint)
-        }
-        context.strokePath()
-        
-        // 7. 绘制手部关键点
-        var minX: CGFloat = bounds.width
-        var minY: CGFloat = bounds.height
-        
-        for landmark in handLandmarks {
-            let point = CoordinateTransformer.point(
-                from: CGPoint(x: CGFloat(landmark.x), y: CGFloat(landmark.y)),
-                imageSize: imageSize,
-                viewSize: bounds.size
-            )
-            
-            let rect = CGRect(x: point.x - 3, y: point.y - 3, width: 6, height: 6)
-            context.fillEllipse(in: rect)
-            
-            minX = min(minX, point.x)
-            minY = min(minY, point.y)
-        }
-        
-        // 8. 绘制手势名称（修复 Category 字段 + 字符串绘制）
-        if !gestures.isEmpty {
-            // 取得分最高的手势分类
-            let topCategory = gestures.max(by: { $0.score ?? 0 < $1.score ?? 0 })
-            let gestureText = topCategory?.categoryName ?? topCategory?.label ?? "Unknown"
-            
-            // 9. 修复 Swift 字符串尺寸计算（桥接 NSString）
-            let attributes: [NSAttributedString.Key: Any] = [
-                .font: UIFont.boldSystemFont(ofSize: 24),
-                .foregroundColor: UIColor.red
-            ]
-            
-            let textSize = (gestureText as NSString).size(withAttributes: attributes)
-            let textRect = CGRect(
-                x: minX,
-                y: max(minY - textSize.height - 10, 0), // 防止超出视图顶部
-                width: textSize.width,
-                height: textSize.height
-            )
-            
-            (gestureText as NSString).draw(in: textRect, withAttributes: attributes)
+            // ✅ 绘制手势名称（适配 Category 为 OpaquePointer 的情况）
+            if handIndex < gestures.count {
+                let gestureCategories = gestures[handIndex]
+                if let topCategory = gestureCategories.max(by: {
+                    // 通过 KVC 安全获取 score（适配 OpaquePointer）
+                    let score1 = $0.value(forKey: "score") as? Float ?? 0
+                    let score2 = $1.value(forKey: "score") as? Float ?? 0
+                    return score1 < score2
+                }) {
+                    // 通过 KVC 获取 categoryName/label（适配 OpaquePointer）
+                    let categoryName = topCategory.value(forKey: "categoryName") as? String
+                    let label = topCategory.value(forKey: "label") as? String
+                    let text = categoryName ?? label ?? "Unknown"
+                    
+                    let attributes: [NSAttributedString.Key: Any] = [
+                        .font: UIFont.boldSystemFont(ofSize: 24),
+                        .foregroundColor: UIColor.red
+                    ]
+                    
+                    // ✅ 修复字符串尺寸计算
+                    let textSize = (text as NSString).size(withAttributes: attributes)
+                    let textRect = CGRect(
+                        x: minX,
+                        y: max(minY - textSize.height - 10, 0),
+                        width: textSize.width,
+                        height: textSize.height
+                    )
+                    (text as NSString).draw(in: textRect, withAttributes: attributes)
+                }
+            }
         }
     }
 }
