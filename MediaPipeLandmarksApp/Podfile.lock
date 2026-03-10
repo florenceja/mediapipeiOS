@@ -1,60 +1,20 @@
 PODS:
-  - MediaPipeTasksVision (0.10.14):
-    - MediaPipeTasksVision/ObjC (= 0.10.14)
-  - MediaPipeTasksVision/ObjC (0.10.14):
-    - MediaPipeXCFrameworkCommon (= 0.10.14)
-    - MediaPipeXCFrameworkFaceDetector (= 0.10.14)
-    - MediaPipeXCFrameworkFaceLandmarker (= 0.10.14)
-    - MediaPipeXCFrameworkGestureRecognizer (= 0.10.14)
-    - MediaPipeXCFrameworkHandLandmarker (= 0.10.14)
-    - MediaPipeXCFrameworkImageSegmenter (= 0.10.14)
-    - MediaPipeXCFrameworkObjectDetector (= 0.10.14)
-    - MediaPipeXCFrameworkPoseLandmarker (= 0.10.14)
-  - MediaPipeXCFrameworkCommon (0.10.14)
-  - MediaPipeXCFrameworkFaceDetector (0.10.14):
-    - MediaPipeXCFrameworkCommon
-  - MediaPipeXCFrameworkFaceLandmarker (0.10.14):
-    - MediaPipeXCFrameworkCommon
-    - MediaPipeXCFrameworkFaceDetector
-  - MediaPipeXCFrameworkGestureRecognizer (0.10.14):
-    - MediaPipeXCFrameworkCommon
-    - MediaPipeXCFrameworkHandLandmarker
-  - MediaPipeXCFrameworkHandLandmarker (0.10.14):
-    - MediaPipeXCFrameworkCommon
-  - MediaPipeXCFrameworkImageSegmenter (0.10.14):
-    - MediaPipeXCFrameworkCommon
-  - MediaPipeXCFrameworkObjectDetector (0.10.14):
-    - MediaPipeXCFrameworkCommon
-  - MediaPipeXCFrameworkPoseLandmarker (0.10.14):
-    - MediaPipeXCFrameworkCommon
-    - MediaPipeXCFrameworkHandLandmarker
+  - MediaPipeTasksCommon (0.10.21)
+  - MediaPipeTasksVision (0.10.21):
+    - MediaPipeTasksCommon (= 0.10.21)
 
 DEPENDENCIES:
   - MediaPipeTasksVision (~> 0.10.0)
 
 SPEC REPOS:
   trunk:
+    - MediaPipeTasksCommon
     - MediaPipeTasksVision
-    - MediaPipeXCFrameworkCommon
-    - MediaPipeXCFrameworkFaceDetector
-    - MediaPipeXCFrameworkFaceLandmarker
-    - MediaPipeXCFrameworkGestureRecognizer
-    - MediaPipeXCFrameworkHandLandmarker
-    - MediaPipeXCFrameworkImageSegmenter
-    - MediaPipeXCFrameworkObjectDetector
-    - MediaPipeXCFrameworkPoseLandmarker
 
 SPEC CHECKSUMS:
-  MediaPipeTasksVision: 873b1a11e5e4f8c8d0e0e5e5e5e5e5e5e5e5e5e5
-  MediaPipeXCFrameworkCommon: 873b1a11e5e4f8c8d0e0e5e5e5e5e5e5e5e5e5e5
-  MediaPipeXCFrameworkFaceDetector: 873b1a11e5e4f8c8d0e0e5e5e5e5e5e5e5e5e5e5
-  MediaPipeXCFrameworkFaceLandmarker: 873b1a11e5e4f8c8d0e0e5e5e5e5e5e5e5e5e5e5
-  MediaPipeXCFrameworkGestureRecognizer: 873b1a11e5e4f8c8d0e0e5e5e5e5e5e5e5e5e5e5
-  MediaPipeXCFrameworkHandLandmarker: 873b1a11e5e4f8c8d0e0e5e5e5e5e5e5e5e5e5e5
-  MediaPipeXCFrameworkImageSegmenter: 873b1a11e5e4f8c8d0e0e5e5e5e5e5e5e5e5e5e5
-  MediaPipeXCFrameworkObjectDetector: 873b1a11e5e4f8c8d0e0e5e5e5e5e5e5e5e5e5e5
-  MediaPipeXCFrameworkPoseLandmarker: 873b1a11e5e4f8c8d0e0e5e5e5e5e5e5e5e5e5e5
+  MediaPipeTasksCommon: 6cfa29170d4900f04d250ad95ec058f14a741f38
+  MediaPipeTasksVision: 7b1c0f5a5820e87e9d96926f5e65d8cd3744fac2
 
-PODFILE CHECKSUM: 873b1a11e5e4f8c8d0e0e5e5e5e5e5e5e5e5e5e5
+PODFILE CHECKSUM: 65d1e05e9aeb515330256b3c1a48328c6bb4941a
 
-COCOAPODS: 1.15.2
+COCOAPODS: 1.16.2

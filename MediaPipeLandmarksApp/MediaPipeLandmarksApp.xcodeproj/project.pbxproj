@@ -13,7 +13,7 @@
 		3D61189B4899492A986F8799 /* face_landmarker.task in Resources */ = {isa = PBXBuildFile; fileRef = 9015122E60DE42D8B1BDEE7E /* face_landmarker.task */; };
 		4C56B5B2382E494988981D25 /* CameraManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C47FE137F04402AAE11D56 /* CameraManager.swift */; };
 		72BDA9A3D8924A1AB1F89F6B /* FaceOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5433730DFB642AC800CD493 /* FaceOverlayView.swift */; };
-		A2030D936E08027075E3216B /* Pods_MediaPipeLandmarksApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F50B1C15D4927023C99387C3 /* Pods_MediaPipeLandmarksApp.framework */; };
+		947AF1174070B1CE5B913455 /* Pods_MediaPipeLandmarksApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8285F7D9C87BB8B2E69A0FE /* Pods_MediaPipeLandmarksApp.framework */; };
 		A2D6A8DDC2124BDAB70A1B62 /* HandGestureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC34FA7F3F6A4EF3B9D65CE0 /* HandGestureViewController.swift */; };
 		A3AD96A545A44145A9E28F6F /* HandOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA02E4FBA14A4E4FA841D89A /* HandOverlayView.swift */; };
 		B20305B08D56491E8A0EA1EF /* CoordinateTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D7B7955872141F49A25C8B3 /* CoordinateTransformer.swift */; };
@@ -24,23 +24,23 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		06DD93242DE8F6ACABAF7204 /* Pods-MediaPipeLandmarksApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MediaPipeLandmarksApp.debug.xcconfig"; path = "Target Support Files/Pods-MediaPipeLandmarksApp/Pods-MediaPipeLandmarksApp.debug.xcconfig"; sourceTree = "<group>"; };
 		1CF22A6AA3664FEA9BF170D4 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		39ED69C7940448C697798877 /* MediaPipeLandmarksApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MediaPipeLandmarksApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5F7043487366485097C63145 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		60C47FE137F04402AAE11D56 /* CameraManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraManager.swift; sourceTree = "<group>"; };
 		7FAB9F6D7F024658A4B097D5 /* GestureRecognizerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GestureRecognizerService.swift; sourceTree = "<group>"; };
+		8124226D10229B36FBBD56D4 /* Pods-MediaPipeLandmarksApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MediaPipeLandmarksApp.release.xcconfig"; path = "Target Support Files/Pods-MediaPipeLandmarksApp/Pods-MediaPipeLandmarksApp.release.xcconfig"; sourceTree = "<group>"; };
 		9015122E60DE42D8B1BDEE7E /* face_landmarker.task */ = {isa = PBXFileReference; lastKnownFileType = file; path = face_landmarker.task; sourceTree = "<group>"; };
 		91451BC9927141BFA3AEB06B /* FaceDetectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceDetectionViewController.swift; sourceTree = "<group>"; };
 		9D7B7955872141F49A25C8B3 /* CoordinateTransformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinateTransformer.swift; sourceTree = "<group>"; };
-		A6B224C69230A7E66D31BFBC /* Pods-MediaPipeLandmarksApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MediaPipeLandmarksApp.release.xcconfig"; path = "Target Support Files/Pods-MediaPipeLandmarksApp/Pods-MediaPipeLandmarksApp.release.xcconfig"; sourceTree = "<group>"; };
+		A8285F7D9C87BB8B2E69A0FE /* Pods_MediaPipeLandmarksApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MediaPipeLandmarksApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA02E4FBA14A4E4FA841D89A /* HandOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandOverlayView.swift; sourceTree = "<group>"; };
 		B4A01CA686E541BFAF034C5F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		C5433730DFB642AC800CD493 /* FaceOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceOverlayView.swift; sourceTree = "<group>"; };
 		CC34FA7F3F6A4EF3B9D65CE0 /* HandGestureViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandGestureViewController.swift; sourceTree = "<group>"; };
 		D60C29DBEA9942E8A6C2256D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D7DF3FA4F6DD4926B4DBCA9A /* gesture_recognizer.task */ = {isa = PBXFileReference; lastKnownFileType = file; path = gesture_recognizer.task; sourceTree = "<group>"; };
-		F50B1C15D4927023C99387C3 /* Pods_MediaPipeLandmarksApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MediaPipeLandmarksApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		FC1014C852C1B1E7706AC6EC /* Pods-MediaPipeLandmarksApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MediaPipeLandmarksApp.debug.xcconfig"; path = "Target Support Files/Pods-MediaPipeLandmarksApp/Pods-MediaPipeLandmarksApp.debug.xcconfig"; sourceTree = "<group>"; };
 		FE2620FB941B4AA283F3F0E5 /* FaceLandmarkerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceLandmarkerService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -49,7 +49,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A2030D936E08027075E3216B /* Pods_MediaPipeLandmarksApp.framework in Frameworks */,
+				947AF1174070B1CE5B913455 /* Pods_MediaPipeLandmarksApp.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -69,17 +69,9 @@
 			children = (
 				A8AED8F1FE67473BB27FCA03 /* MediaPipeLandmarksApp */,
 				C8B9785386714787B8F6BDCD /* Products */,
-				7F5BA85272E2FC97D8724CF4 /* Pods */,
-				1E058D39CFE62469311ACAC7 /* Frameworks */,
+				881E1531AD336E9A74CBFC1B /* Pods */,
+				8AADA68D36E0540748D43546 /* Frameworks */,
 			);
-			sourceTree = "<group>";
-		};
-		1E058D39CFE62469311ACAC7 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				F50B1C15D4927023C99387C3 /* Pods_MediaPipeLandmarksApp.framework */,
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		2BFB8F6C33174CA3A63F48F6 /* Services */ = {
@@ -92,14 +84,22 @@
 			path = Services;
 			sourceTree = "<group>";
 		};
-		7F5BA85272E2FC97D8724CF4 /* Pods */ = {
+		881E1531AD336E9A74CBFC1B /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				FC1014C852C1B1E7706AC6EC /* Pods-MediaPipeLandmarksApp.debug.xcconfig */,
-				A6B224C69230A7E66D31BFBC /* Pods-MediaPipeLandmarksApp.release.xcconfig */,
+				06DD93242DE8F6ACABAF7204 /* Pods-MediaPipeLandmarksApp.debug.xcconfig */,
+				8124226D10229B36FBBD56D4 /* Pods-MediaPipeLandmarksApp.release.xcconfig */,
 			);
 			name = Pods;
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		8AADA68D36E0540748D43546 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A8285F7D9C87BB8B2E69A0FE /* Pods_MediaPipeLandmarksApp.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		9930CEA206414757B2E6FFE1 /* Controllers */ = {
@@ -160,6 +160,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = A848FFC0ABCF422A963D927A /* Build configuration list for PBXNativeTarget "MediaPipeLandmarksApp" */;
 			buildPhases = (
+				E33BC464851A224331CBF15F /* [CP] Check Pods Manifest.lock */,
 				7C75A4B2EFA14197A3D955B6 /* Sources */,
 				4A63EBE33B3A4E1AB649C3BA /* Frameworks */,
 				DB6844900B3340A099C4C23D /* Resources */,
@@ -216,6 +217,31 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		E33BC464851A224331CBF15F /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-MediaPipeLandmarksApp-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		7C75A4B2EFA14197A3D955B6 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -260,6 +286,7 @@
 		};
 		84E018B7AA5A405EB1950E9E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 06DD93242DE8F6ACABAF7204 /* Pods-MediaPipeLandmarksApp.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -310,6 +337,7 @@
 		};
 		C6BBDF289A254B24919BB366 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8124226D10229B36FBBD56D4 /* Pods-MediaPipeLandmarksApp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
