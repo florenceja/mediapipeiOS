@@ -5,6 +5,7 @@ class MainViewController: UIViewController {
     private let subtitleLabel = UILabel()
     private let faceButton = UIButton(type: .system)
     private let handButton = UIButton(type: .system)
+    private let tongueButton = UIButton(type: .system)
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,7 +37,15 @@ class MainViewController: UIViewController {
         )
         handButton.addTarget(self, action: #selector(openHandGesture), for: .touchUpInside)
         
-        let stackView = UIStackView(arrangedSubviews: [faceButton, handButton])
+        configureCardButton(
+            tongueButton,
+            title: "Tongue Detection",
+            subtitle: "Detect tongue-out with ARKit",
+            symbolName: "mouth.fill"
+        )
+        tongueButton.addTarget(self, action: #selector(openTongueDetection), for: .touchUpInside)
+        
+        let stackView = UIStackView(arrangedSubviews: [faceButton, handButton, tongueButton])
         stackView.axis = .vertical
         stackView.spacing = 14
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -54,7 +63,8 @@ class MainViewController: UIViewController {
             stackView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -10),
             
             faceButton.heightAnchor.constraint(equalToConstant: 92),
-            handButton.heightAnchor.constraint(equalToConstant: 92)
+            handButton.heightAnchor.constraint(equalToConstant: 92),
+            tongueButton.heightAnchor.constraint(equalToConstant: 92)
         ])
     }
     
@@ -99,6 +109,11 @@ class MainViewController: UIViewController {
     
     @objc private func openHandGesture() {
         let vc = HandGestureViewController()
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    @objc private func openTongueDetection() {
+        let vc = TongueDetectionViewController()
         navigationController?.pushViewController(vc, animated: true)
     }
 }
