@@ -146,7 +146,7 @@ class HandGestureViewController: UIViewController {
     private func topGestureName(from gestures: [[ResultCategory]]) -> String? {
         guard let firstHand = gestures.first, !firstHand.isEmpty else { return nil }
         guard let best = firstHand.max(by: { $0.score < $1.score }) else { return nil }
-        let name = [best.categoryName, best.displayName]
+        let name = [best.categoryName]
             .compactMap { $0 }
             .first(where: { !$0.isEmpty }) ?? "Unknown"
         return "\(name) \(Int(best.score * 100))%"

@@ -93,7 +93,7 @@ class HandOverlayView: UIView {
                 if let topCategory = gestureCategories.max(by: {
                     $0.score < $1.score
                 }) {
-                    let text = [topCategory.categoryName, topCategory.displayName]
+                    let text = [topCategory.categoryName]
                         .compactMap { $0 }
                         .first(where: { !$0.isEmpty }) ?? "Unknown"
                     let scoreText = String(format: "%.0f%%", topCategory.score * 100)

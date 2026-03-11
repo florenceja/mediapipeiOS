@@ -64,16 +64,19 @@ class MainViewController: UIViewController {
         config.image = UIImage(systemName: symbolName)
         config.imagePlacement = .leading
         config.imagePadding = 12
-        
-        var attributedTitle = AttributedString(title)
-        attributedTitle.font = .systemFont(ofSize: 19, weight: .bold)
-        attributedTitle.foregroundColor = .white
-        config.attributedTitle = attributedTitle
-        
-        var attributedSubtitle = AttributedString(subtitle)
-        attributedSubtitle.font = .systemFont(ofSize: 13, weight: .medium)
-        attributedSubtitle.foregroundColor = UIColor.white.withAlphaComponent(0.8)
-        config.attributedSubtitle = attributedSubtitle
+        config.title = title
+        config.subtitle = subtitle
+        config.baseForegroundColor = .white
+        config.titleTextAttributesTransformer = UIConfigurationTextAttributesTransformer { incoming in
+            var outgoing = incoming
+            outgoing.font = .systemFont(ofSize: 19, weight: .bold)
+            return outgoing
+        }
+        config.subtitleTextAttributesTransformer = UIConfigurationTextAttributesTransformer { incoming in
+            var outgoing = incoming
+            outgoing.font = .systemFont(ofSize: 13, weight: .medium)
+            return outgoing
+        }
         
         button.configuration = config
         button.tintColor = UIColor.systemBlue
