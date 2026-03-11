@@ -41,9 +41,9 @@ class HandOverlayView: UIView {
         guard !handLandmarks.isEmpty, imageSize != .zero else { return }
         guard let context = UIGraphicsGetCurrentContext() else { return }
         
-        context.setStrokeColor(UIColor.blue.cgColor)
+        context.setStrokeColor(UIColor.systemCyan.cgColor)
         context.setLineWidth(2.0)
-        context.setFillColor(UIColor.orange.cgColor)
+        context.setFillColor(UIColor.systemBlue.cgColor)
         
         for (handIndex, hand) in handLandmarks.enumerated() {
             // 绘制骨架连接
@@ -91,31 +91,33 @@ class HandOverlayView: UIView {
             if handIndex < gestures.count {
                 let gestureCategories = gestures[handIndex]
                 if let topCategory = gestureCategories.max(by: {
-                    let score1 = ($0 as AnyObject).value(forKey: "score") as? Float ?? 0
-                    let score2 = ($1 as AnyObject).value(forKey: "score") as? Float ?? 0
-                    return score1 < score2
+                    $0.score < $1.score
                 }) {
-                    let categoryName = (topCategory as AnyObject).value(forKey: "categoryName") as? String
-                    let displayName = (topCategory as AnyObject).value(forKey: "displayName") as? String
-                    let label = (topCategory as AnyObject).value(forKey: "label") as? String
-                    let text = [categoryName, displayName, label]
+                    let text = [topCategory.categoryName, topCategory.displayName]
                         .compactMap { $0 }
                         .first(where: { !$0.isEmpty }) ?? "Unknown"
+                    let scoreText = String(format: "%.0f%%", topCategory.score * 100)
+                    let displayText = "\(text)  \(scoreText)"
                     
                     let attributes: [NSAttributedString.Key: Any] = [
-                        .font: UIFont.boldSystemFont(ofSize: 24),
-                        .foregroundColor: UIColor.red
+                        .font: UIFont.boldSystemFont(ofSize: 20),
+                        .foregroundColor: UIColor.white
                     ]
                     
                     // ✅ 修复字符串尺寸计算
-                    let textSize = (text as NSString).size(withAttributes: attributes)
+                    let textSize = (displayText as NSString).size(withAttributes: attributes)
                     let textRect = CGRect(
                         x: minX,
                         y: max(minY - textSize.height - 10, 0),
                         width: textSize.width,
                         height: textSize.height
                     )
-                    (text as NSString).draw(in: textRect, withAttributes: attributes)
+                    let bgRect = textRect.insetBy(dx: -10, dy: -6)
+                    context.setFillColor(UIColor.black.withAlphaComponent(0.55).cgColor)
+                    let path = UIBezierPath(roundedRect: bgRect, cornerRadius: 10)
+                    context.addPath(path.cgPath)
+                    context.fillPath()
+                    (displayText as NSString).draw(in: textRect, withAttributes: attributes)
                 }
             }
         }

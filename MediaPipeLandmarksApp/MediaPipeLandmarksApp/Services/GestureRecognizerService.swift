@@ -12,7 +12,10 @@ class GestureRecognizerService: NSObject {
     private(set) var initializationErrorMessage: String?
     private var lastImageSize: CGSize = .zero
     private var lastTimestampMs = -1
-    private let imageOrientation: UIImage.Orientation = .leftMirrored
+    private let imageOrientation: UIImage.Orientation = .upMirrored
+    private var isProcessingFrame = false
+    private var lastInferenceTimeMs = 0
+    private let inferenceIntervalMs = 50
     
     override init() {
         super.init()
@@ -32,9 +35,9 @@ class GestureRecognizerService: NSObject {
         options.baseOptions.modelAssetPath = modelPath
         options.runningMode = .liveStream
         options.numHands = 2
-        options.minHandDetectionConfidence = 0.5
-        options.minHandPresenceConfidence = 0.5
-        options.minTrackingConfidence = 0.5
+        options.minHandDetectionConfidence = 0.35
+        options.minHandPresenceConfidence = 0.35
+        options.minTrackingConfidence = 0.35
         options.gestureRecognizerLiveStreamDelegate = self
         
         do {
@@ -66,6 +69,7 @@ class GestureRecognizerService: NSObject {
     
     func recognizeAsync(sampleBuffer: CMSampleBuffer) {
         guard let gestureRecognizer = gestureRecognizer else { return }
+        guard !isProcessingFrame else { return }
         
         guard let imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else { return }
         let width = CVPixelBufferGetWidth(imageBuffer)
@@ -76,12 +80,18 @@ class GestureRecognizerService: NSObject {
         if timestamp <= lastTimestampMs {
             timestamp = lastTimestampMs + 1
         }
+        if timestamp - lastInferenceTimeMs < inferenceIntervalMs {
+            return
+        }
         lastTimestampMs = timestamp
+        lastInferenceTimeMs = timestamp
+        isProcessingFrame = true
         
         do {
             let mpImage = try MPImage(sampleBuffer: sampleBuffer, orientation: imageOrientation)
             try gestureRecognizer.recognizeAsync(image: mpImage, timestampInMilliseconds: timestamp)
         } catch {
+            isProcessingFrame = false
             delegate?.gestureRecognizerService(self, didFinishRecognition: nil, imageSize: lastImageSize, error: error)
             print("Error recognizing gestures: \(error)")
         }
@@ -90,6 +100,7 @@ class GestureRecognizerService: NSObject {
 
 extension GestureRecognizerService: GestureRecognizerLiveStreamDelegate {
     func gestureRecognizer(_ gestureRecognizer: GestureRecognizer, didFinishRecognition result: GestureRecognizerResult?, timestampInMilliseconds: Int, error: Error?) {
+        isProcessingFrame = false
         delegate?.gestureRecognizerService(self, didFinishRecognition: result, imageSize: lastImageSize, error: error)
     }
 }

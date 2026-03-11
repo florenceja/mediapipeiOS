@@ -29,9 +29,9 @@ class FaceOverlayView: UIView {
         
         guard let context = UIGraphicsGetCurrentContext() else { return }
         
-        context.setStrokeColor(UIColor.green.cgColor)
+        context.setStrokeColor(UIColor.systemBlue.cgColor)
         context.setLineWidth(1.0)
-        context.setFillColor(UIColor.red.cgColor)
+        context.setFillColor(UIColor.systemTeal.cgColor)
         
         for face in faceLandmarks {
             // Draw connections
