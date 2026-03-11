@@ -13,6 +13,16 @@ class HandGestureViewController: UIViewController {
     private let statusLabel = UILabel()
     private let titleLabel = UILabel()
     private let subtitleLabel = UILabel()
+    private let gestureNameMap: [String: String] = [
+        "None": "无手势",
+        "Closed_Fist": "握拳",
+        "Open_Palm": "张开手掌",
+        "Pointing_Up": "食指向上",
+        "Thumb_Down": "拇指向下",
+        "Thumb_Up": "拇指向上",
+        "Victory": "胜利",
+        "ILoveYou": "我爱你"
+    ]
     private var hasShownSetupError = false
     private var hasShownRuntimeError = false
     private var pendingSetupErrorMessage: String?
@@ -146,10 +156,10 @@ class HandGestureViewController: UIViewController {
     private func topGestureName(from gestures: [[ResultCategory]]) -> String? {
         guard let firstHand = gestures.first, !firstHand.isEmpty else { return nil }
         guard let best = firstHand.max(by: { $0.score < $1.score }) else { return nil }
-        let name = [best.categoryName]
+        let englishName = [best.categoryName]
             .compactMap { $0 }
             .first(where: { !$0.isEmpty }) ?? "Unknown"
-        return "\(name) \(Int(best.score * 100))%"
+        return gestureNameMap[englishName] ?? englishName
     }
     
     private func showSetupErrorIfNeeded(message: String) {

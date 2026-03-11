@@ -16,6 +16,16 @@ class HandOverlayView: UIView {
     private var handLandmarks: [[NormalizedLandmark]] = []
     private var gestures: [[ResultCategory]] = []
     private var imageSize: CGSize = .zero
+    private let gestureNameMap: [String: String] = [
+        "None": "无手势",
+        "Closed_Fist": "握拳",
+        "Open_Palm": "张开手掌",
+        "Pointing_Up": "食指向上",
+        "Thumb_Down": "拇指向下",
+        "Thumb_Up": "拇指向上",
+        "Victory": "胜利",
+        "ILoveYou": "我爱你"
+    ]
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -93,11 +103,10 @@ class HandOverlayView: UIView {
                 if let topCategory = gestureCategories.max(by: {
                     $0.score < $1.score
                 }) {
-                    let text = [topCategory.categoryName]
+                    let englishName = [topCategory.categoryName]
                         .compactMap { $0 }
                         .first(where: { !$0.isEmpty }) ?? "Unknown"
-                    let scoreText = String(format: "%.0f%%", topCategory.score * 100)
-                    let displayText = "\(text)  \(scoreText)"
+                    let displayText = gestureNameMap[englishName] ?? englishName
                     
                     let attributes: [NSAttributedString.Key: Any] = [
                         .font: UIFont.boldSystemFont(ofSize: 20),
