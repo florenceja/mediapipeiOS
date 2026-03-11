@@ -59,27 +59,33 @@ class MainViewController: UIViewController {
     }
     
     private func configureCardButton(_ button: UIButton, title: String, subtitle: String, symbolName: String) {
-        var config = UIButton.Configuration.plain()
-        config.contentInsets = NSDirectionalEdgeInsets(top: 16, leading: 16, bottom: 16, trailing: 16)
-        config.image = UIImage(systemName: symbolName)
-        config.imagePlacement = .leading
-        config.imagePadding = 12
-        config.title = title
-        config.subtitle = subtitle
-        config.baseForegroundColor = .white
-        config.titleTextAttributesTransformer = UIConfigurationTextAttributesTransformer { incoming in
-            var outgoing = incoming
-            outgoing.font = .systemFont(ofSize: 19, weight: .bold)
-            return outgoing
-        }
-        config.subtitleTextAttributesTransformer = UIConfigurationTextAttributesTransformer { incoming in
-            var outgoing = incoming
-            outgoing.font = .systemFont(ofSize: 13, weight: .medium)
-            return outgoing
-        }
+        let titleText = "\(title)\n\(subtitle)"
+        let attributedTitle = NSMutableAttributedString(
+            string: titleText,
+            attributes: [
+                .foregroundColor: UIColor.white
+            ]
+        )
+        attributedTitle.addAttributes(
+            [.font: UIFont.systemFont(ofSize: 19, weight: .bold)],
+            range: NSRange(location: 0, length: title.count)
+        )
+        attributedTitle.addAttributes(
+            [
+                .font: UIFont.systemFont(ofSize: 13, weight: .medium),
+                .foregroundColor: UIColor.white.withAlphaComponent(0.8)
+            ],
+            range: NSRange(location: title.count + 1, length: subtitle.count)
+        )
         
-        button.configuration = config
+        button.setAttributedTitle(attributedTitle, for: .normal)
+        button.titleLabel?.numberOfLines = 2
+        button.titleLabel?.lineBreakMode = .byWordWrapping
+        button.contentHorizontalAlignment = .left
+        button.contentEdgeInsets = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
+        button.setImage(UIImage(systemName: symbolName), for: .normal)
         button.tintColor = UIColor.systemBlue
+        button.imageEdgeInsets = UIEdgeInsets(top: 0, left: -2, bottom: 0, right: 10)
         button.backgroundColor = UIColor.white.withAlphaComponent(0.1)
         button.layer.cornerRadius = 18
         button.layer.borderWidth = 1
