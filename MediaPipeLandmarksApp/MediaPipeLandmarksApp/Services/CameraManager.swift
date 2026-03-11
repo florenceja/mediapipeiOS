@@ -57,6 +57,11 @@ class CameraManager: NSObject {
         
         captureSession.addInput(videoDeviceInput)
         
+        // MediaPipe Tasks on iOS expects RGB/BGRA style pixel buffers for reliable live-stream inference.
+        // Some devices default to YUV output if not specified, which can lead to preview-only behavior.
+        videoOutput.videoSettings = [
+            kCVPixelBufferPixelFormatTypeKey as String: Int(kCVPixelFormatType_32BGRA)
+        ]
         videoOutput.alwaysDiscardsLateVideoFrames = true
         videoOutput.setSampleBufferDelegate(self, queue: videoQueue)
         

@@ -8,6 +8,7 @@ class FaceDetectionViewController: UIViewController {
     private let faceLandmarkerService = FaceLandmarkerService()
     private let overlayView = FaceOverlayView()
     private var hasShownSetupError = false
+    private var hasShownRuntimeError = false
     private var pendingSetupErrorMessage: String?
     
     override func viewDidLoad() {
@@ -77,6 +78,19 @@ class FaceDetectionViewController: UIViewController {
         alert.addAction(UIAlertAction(title: "知道了", style: .default))
         present(alert, animated: true)
     }
+    
+    private func showRuntimeErrorIfNeeded(message: String) {
+        guard !hasShownRuntimeError else { return }
+        hasShownRuntimeError = true
+        
+        let alert = UIAlertController(
+            title: "人脸识别运行错误",
+            message: message,
+            preferredStyle: .alert
+        )
+        alert.addAction(UIAlertAction(title: "知道了", style: .default))
+        present(alert, animated: true)
+    }
 }
 
 extension FaceDetectionViewController: CameraManagerDelegate {
@@ -89,6 +103,9 @@ extension FaceDetectionViewController: FaceLandmarkerServiceDelegate {
     func faceLandmarkerService(_ service: FaceLandmarkerService, didFinishDetection result: FaceLandmarkerResult?, imageSize: CGSize, error: Error?) {
         if let error = error {
             print("Face detection error: \(error)")
+            DispatchQueue.main.async {
+                self.showRuntimeErrorIfNeeded(message: error.localizedDescription)
+            }
             return
         }
         guard let result = result else { return }

@@ -8,6 +8,7 @@ class HandGestureViewController: UIViewController {
     private let gestureRecognizerService = GestureRecognizerService()
     private let overlayView = HandOverlayView()
     private var hasShownSetupError = false
+    private var hasShownRuntimeError = false
     private var pendingSetupErrorMessage: String?
     
     override func viewDidLoad() {
@@ -77,6 +78,19 @@ class HandGestureViewController: UIViewController {
         alert.addAction(UIAlertAction(title: "知道了", style: .default))
         present(alert, animated: true)
     }
+    
+    private func showRuntimeErrorIfNeeded(message: String) {
+        guard !hasShownRuntimeError else { return }
+        hasShownRuntimeError = true
+        
+        let alert = UIAlertController(
+            title: "手势识别运行错误",
+            message: message,
+            preferredStyle: .alert
+        )
+        alert.addAction(UIAlertAction(title: "知道了", style: .default))
+        present(alert, animated: true)
+    }
 }
 
 extension HandGestureViewController: CameraManagerDelegate {
@@ -89,6 +103,9 @@ extension HandGestureViewController: GestureRecognizerServiceDelegate {
     func gestureRecognizerService(_ service: GestureRecognizerService, didFinishRecognition result: GestureRecognizerResult?, imageSize: CGSize, error: Error?) {
         if let error = error {
             print("Gesture recognition error: \(error)")
+            DispatchQueue.main.async {
+                self.showRuntimeErrorIfNeeded(message: error.localizedDescription)
+            }
             return
         }
         guard let result = result else { return }
