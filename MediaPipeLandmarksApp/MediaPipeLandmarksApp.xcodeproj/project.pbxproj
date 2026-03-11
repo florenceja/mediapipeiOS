@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		0A2C7726D033496D94F7D372 /* FaceDetectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91451BC9927141BFA3AEB06B /* FaceDetectionViewController.swift */; };
 		1A2B3C4D5E6F708192A3B4C5 /* TongueDetectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B3C4D5E6F708192A3B4C5D6 /* TongueDetectionViewController.swift */; };
+		1B2C3D4E5F60718293A4B5C6 /* TongueOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C3D4E5F60718293A4B5C6D7 /* TongueOverlayView.swift */; };
 		24E6D50C36104A30B761D0CA /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CF22A6AA3664FEA9BF170D4 /* MainViewController.swift */; };
 		36C6FCB2D4EF42B495EDEEFA /* gesture_recognizer.task in Resources */ = {isa = PBXBuildFile; fileRef = D7DF3FA4F6DD4926B4DBCA9A /* gesture_recognizer.task */; };
 		3D61189B4899492A986F8799 /* face_landmarker.task in Resources */ = {isa = PBXBuildFile; fileRef = 9015122E60DE42D8B1BDEE7E /* face_landmarker.task */; };
@@ -28,6 +29,7 @@
 		06DD93242DE8F6ACABAF7204 /* Pods-MediaPipeLandmarksApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MediaPipeLandmarksApp.debug.xcconfig"; path = "Target Support Files/Pods-MediaPipeLandmarksApp/Pods-MediaPipeLandmarksApp.debug.xcconfig"; sourceTree = "<group>"; };
 		1CF22A6AA3664FEA9BF170D4 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		2B3C4D5E6F708192A3B4C5D6 /* TongueDetectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TongueDetectionViewController.swift; sourceTree = "<group>"; };
+		2C3D4E5F60718293A4B5C6D7 /* TongueOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TongueOverlayView.swift; sourceTree = "<group>"; };
 		39ED69C7940448C697798877 /* MediaPipeLandmarksApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MediaPipeLandmarksApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5F7043487366485097C63145 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		60C47FE137F04402AAE11D56 /* CameraManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraManager.swift; sourceTree = "<group>"; };
@@ -152,6 +154,7 @@
 			children = (
 				C5433730DFB642AC800CD493 /* FaceOverlayView.swift */,
 				AA02E4FBA14A4E4FA841D89A /* HandOverlayView.swift */,
+				2C3D4E5F60718293A4B5C6D7 /* TongueOverlayView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -261,6 +264,7 @@
 				E2A77842AC084973ADD54B97 /* GestureRecognizerService.swift in Sources */,
 				72BDA9A3D8924A1AB1F89F6B /* FaceOverlayView.swift in Sources */,
 				A3AD96A545A44145A9E28F6F /* HandOverlayView.swift in Sources */,
+				1B2C3D4E5F60718293A4B5C6 /* TongueOverlayView.swift in Sources */,
 				B20305B08D56491E8A0EA1EF /* CoordinateTransformer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

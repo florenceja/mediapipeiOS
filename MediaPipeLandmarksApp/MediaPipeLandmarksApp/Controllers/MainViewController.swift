@@ -39,8 +39,8 @@ class MainViewController: UIViewController {
         
         configureCardButton(
             tongueButton,
-            title: "Tongue Detection",
-            subtitle: "Detect tongue-out with ARKit",
+            title: "Tongue Estimation",
+            subtitle: "Estimate contour from mouth landmarks",
             symbolName: "mouth.fill"
         )
         tongueButton.addTarget(self, action: #selector(openTongueDetection), for: .touchUpInside)

@@ -1,48 +1,63 @@
 import UIKit
-import ARKit
+import AVFoundation
+import MediaPipeTasksVision
 
 class TongueDetectionViewController: UIViewController {
     
-    private let sceneView = ARSCNView(frame: .zero)
+    private let cameraManager = CameraManager()
+    private let faceLandmarkerService = FaceLandmarkerService()
+    private let overlayView = TongueOverlayView()
     private let topPanel = UIVisualEffectView(effect: UIBlurEffect(style: .systemUltraThinMaterialDark))
     private let tipPanel = UIVisualEffectView(effect: UIBlurEffect(style: .systemThinMaterialDark))
     private let statusDot = UIView()
     private let statusLabel = UILabel()
-    private let tongueStateLabel = UILabel()
-    private let tongueProgress = UIProgressView(progressViewStyle: .default)
+    private let estimateLabel = UILabel()
     private let titleLabel = UILabel()
     private let subtitleLabel = UILabel()
-    private var hasShownUnsupportedAlert = false
+    private var hasShownSetupError = false
+    private var hasShownRuntimeError = false
+    private var pendingSetupErrorMessage: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        setupARSession()
+        setupCamera()
+        setupService()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        startSessionIfSupported()
+        cameraManager.startSession()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if let message = pendingSetupErrorMessage {
+            showSetupErrorIfNeeded(message: message)
+            pendingSetupErrorMessage = nil
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        sceneView.session.pause()
+        cameraManager.stopSession()
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        sceneView.frame = view.bounds
+        cameraManager.previewLayer.frame = view.bounds
+        overlayView.frame = view.bounds
     }
     
     private func setupUI() {
         view.backgroundColor = .black
-        title = "Tongue Detection"
+        title = "Tongue Estimation"
         
-        sceneView.frame = view.bounds
-        sceneView.automaticallyUpdatesLighting = true
-        sceneView.session.delegate = self
-        view.addSubview(sceneView)
+        cameraManager.previewLayer.frame = view.bounds
+        view.layer.addSublayer(cameraManager.previewLayer)
+        
+        overlayView.frame = view.bounds
+        view.addSubview(overlayView)
         
         topPanel.layer.cornerRadius = 16
         topPanel.clipsToBounds = true
@@ -58,22 +73,17 @@ class TongueDetectionViewController: UIViewController {
         statusLabel.textColor = .white
         statusLabel.text = "准备中..."
         
-        tongueStateLabel.translatesAutoresizingMaskIntoConstraints = false
-        tongueStateLabel.font = .systemFont(ofSize: 14, weight: .bold)
-        tongueStateLabel.textColor = .white
-        tongueStateLabel.text = "舌头状态: 未检测"
+        estimateLabel.translatesAutoresizingMaskIntoConstraints = false
+        estimateLabel.font = .systemFont(ofSize: 14, weight: .bold)
+        estimateLabel.textColor = .white
+        estimateLabel.text = "估计轮廓: 待检测"
         
-        let statusStack = UIStackView(arrangedSubviews: [statusDot, statusLabel, tongueStateLabel])
+        let statusStack = UIStackView(arrangedSubviews: [statusDot, statusLabel, estimateLabel])
         statusStack.axis = .horizontal
         statusStack.alignment = .center
         statusStack.spacing = 8
         statusStack.translatesAutoresizingMaskIntoConstraints = false
         topPanel.contentView.addSubview(statusStack)
-        
-        tongueProgress.translatesAutoresizingMaskIntoConstraints = false
-        tongueProgress.progressTintColor = .systemBlue
-        tongueProgress.trackTintColor = UIColor.white.withAlphaComponent(0.25)
-        topPanel.contentView.addSubview(tongueProgress)
         
         tipPanel.layer.cornerRadius = 16
         tipPanel.clipsToBounds = true
@@ -83,13 +93,13 @@ class TongueDetectionViewController: UIViewController {
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.font = .systemFont(ofSize: 18, weight: .bold)
         titleLabel.textColor = .white
-        titleLabel.text = "Tongue Out Guide"
+        titleLabel.text = "Estimated Tongue Contour"
         
         subtitleLabel.translatesAutoresizingMaskIntoConstraints = false
         subtitleLabel.font = .systemFont(ofSize: 13, weight: .medium)
         subtitleLabel.textColor = UIColor.white.withAlphaComponent(0.9)
-        subtitleLabel.numberOfLines = 2
-        subtitleLabel.text = "请正对前置镜头，保持面部稳定，再轻微伸出舌头。"
+        subtitleLabel.numberOfLines = 3
+        subtitleLabel.text = "这是基于口部关键点推断的估计轮廓（非真实舌头关键点）。请正对镜头并轻微张口。"
         
         tipPanel.contentView.addSubview(titleLabel)
         tipPanel.contentView.addSubview(subtitleLabel)
@@ -98,17 +108,13 @@ class TongueDetectionViewController: UIViewController {
             topPanel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 12),
             topPanel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             topPanel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            topPanel.heightAnchor.constraint(equalToConstant: 78),
+            topPanel.heightAnchor.constraint(equalToConstant: 52),
             
-            statusStack.topAnchor.constraint(equalTo: topPanel.contentView.topAnchor, constant: 10),
             statusStack.leadingAnchor.constraint(equalTo: topPanel.contentView.leadingAnchor, constant: 14),
             statusStack.trailingAnchor.constraint(lessThanOrEqualTo: topPanel.contentView.trailingAnchor, constant: -14),
+            statusStack.centerYAnchor.constraint(equalTo: topPanel.contentView.centerYAnchor),
             statusDot.widthAnchor.constraint(equalToConstant: 10),
             statusDot.heightAnchor.constraint(equalToConstant: 10),
-            
-            tongueProgress.leadingAnchor.constraint(equalTo: topPanel.contentView.leadingAnchor, constant: 14),
-            tongueProgress.trailingAnchor.constraint(equalTo: topPanel.contentView.trailingAnchor, constant: -14),
-            tongueProgress.topAnchor.constraint(equalTo: statusStack.bottomAnchor, constant: 10),
             
             tipPanel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             tipPanel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
@@ -125,20 +131,16 @@ class TongueDetectionViewController: UIViewController {
         ])
     }
     
-    private func setupARSession() {
-        guard ARFaceTrackingConfiguration.isSupported else {
-            showUnsupportedAlertIfNeeded()
-            updateStatus(text: "设备不支持舌头检测", color: .systemRed)
-            return
-        }
+    private func setupCamera() {
+        cameraManager.delegate = self
+        cameraManager.setupCamera()
     }
     
-    private func startSessionIfSupported() {
-        guard ARFaceTrackingConfiguration.isSupported else { return }
-        let configuration = ARFaceTrackingConfiguration()
-        configuration.isWorldTrackingEnabled = false
-        sceneView.session.run(configuration, options: [.resetTracking, .removeExistingAnchors])
-        updateStatus(text: "请将脸部置于画面中", color: .systemOrange)
+    private func setupService() {
+        faceLandmarkerService.delegate = self
+        if let message = faceLandmarkerService.initializationErrorMessage {
+            pendingSetupErrorMessage = message
+        }
     }
     
     private func updateStatus(text: String, color: UIColor) {
@@ -146,41 +148,81 @@ class TongueDetectionViewController: UIViewController {
         statusDot.backgroundColor = color
     }
     
-    private func showUnsupportedAlertIfNeeded() {
-        guard !hasShownUnsupportedAlert else { return }
-        hasShownUnsupportedAlert = true
+    private func showSetupErrorIfNeeded(message: String) {
+        guard !hasShownSetupError else { return }
+        hasShownSetupError = true
         let alert = UIAlertController(
-            title: "设备不支持",
-            message: "舌头检测依赖 ARKit TrueDepth（ARFaceTrackingConfiguration）。当前设备不支持该能力。",
+            title: "Tongue Estimation 未就绪",
+            message: message,
             preferredStyle: .alert
         )
         alert.addAction(UIAlertAction(title: "知道了", style: .default))
         present(alert, animated: true)
     }
+    
+    private func showRuntimeErrorIfNeeded(message: String) {
+        guard !hasShownRuntimeError else { return }
+        hasShownRuntimeError = true
+        let alert = UIAlertController(
+            title: "舌头估计运行错误",
+            message: message,
+            preferredStyle: .alert
+        )
+        alert.addAction(UIAlertAction(title: "知道了", style: .default))
+        present(alert, animated: true)
+    }
+    
+    private func mouthOpenRatio(from face: [NormalizedLandmark]) -> CGFloat? {
+        guard face.indices.contains(61),
+              face.indices.contains(291),
+              face.indices.contains(13),
+              face.indices.contains(14) else {
+            return nil
+        }
+        
+        let left = CGPoint(x: CGFloat(face[61].x), y: CGFloat(face[61].y))
+        let right = CGPoint(x: CGFloat(face[291].x), y: CGFloat(face[291].y))
+        let upper = CGPoint(x: CGFloat(face[13].x), y: CGFloat(face[13].y))
+        let lower = CGPoint(x: CGFloat(face[14].x), y: CGFloat(face[14].y))
+        
+        let mouthWidth = hypot(left.x - right.x, left.y - right.y)
+        guard mouthWidth > 0.0001 else { return nil }
+        let mouthOpen = hypot(upper.x - lower.x, upper.y - lower.y)
+        return mouthOpen / mouthWidth
+    }
 }
 
-extension TongueDetectionViewController: ARSessionDelegate {
-    func session(_ session: ARSession, didUpdate anchors: [ARAnchor]) {
-        guard let faceAnchor = anchors.first(where: { $0 is ARFaceAnchor }) as? ARFaceAnchor else {
+extension TongueDetectionViewController: CameraManagerDelegate {
+    func cameraManager(_ manager: CameraManager, didOutput sampleBuffer: CMSampleBuffer) {
+        faceLandmarkerService.detectAsync(sampleBuffer: sampleBuffer)
+    }
+}
+
+extension TongueDetectionViewController: FaceLandmarkerServiceDelegate {
+    func faceLandmarkerService(_ service: FaceLandmarkerService, didFinishDetection result: FaceLandmarkerResult?, imageSize: CGSize, error: Error?) {
+        if let error = error {
             DispatchQueue.main.async {
-                self.tongueStateLabel.text = "舌头状态: 未检测"
-                self.tongueProgress.progress = 0
-                self.updateStatus(text: "未检测到面部", color: .systemOrange)
+                self.showRuntimeErrorIfNeeded(message: error.localizedDescription)
+                self.updateStatus(text: "识别异常", color: .systemRed)
             }
             return
         }
         
-        let tongueOutValue = (faceAnchor.blendShapes[.tongueOut] as? NSNumber)?.floatValue ?? 0
-        let isTongueOut = tongueOutValue > 0.15
-        
         DispatchQueue.main.async {
-            self.tongueProgress.progress = tongueOutValue
-            if isTongueOut {
-                self.tongueStateLabel.text = "舌头状态: 已伸出"
-                self.updateStatus(text: "检测成功", color: .systemGreen)
+            guard let result = result, let face = result.faceLandmarks.first else {
+                self.overlayView.draw(landmarks: [], imageSize: imageSize)
+                self.estimateLabel.text = "估计轮廓: 未检测"
+                self.updateStatus(text: "未检测到面部", color: .systemOrange)
+                return
+            }
+            
+            self.overlayView.draw(landmarks: result.faceLandmarks, imageSize: imageSize)
+            if let ratio = self.mouthOpenRatio(from: face), ratio > 0.06 {
+                self.estimateLabel.text = "估计轮廓: 已显示"
+                self.updateStatus(text: "估计中", color: .systemGreen)
             } else {
-                self.tongueStateLabel.text = "舌头状态: 未伸出"
-                self.updateStatus(text: "实时检测中", color: .systemBlue)
+                self.estimateLabel.text = "估计轮廓: 待检测"
+                self.updateStatus(text: "请轻微张口", color: .systemBlue)
             }
         }
     }
