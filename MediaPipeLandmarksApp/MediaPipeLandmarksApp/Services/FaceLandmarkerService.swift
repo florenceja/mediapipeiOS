@@ -9,6 +9,7 @@ class FaceLandmarkerService: NSObject {
     
     weak var delegate: FaceLandmarkerServiceDelegate?
     private var faceLandmarker: FaceLandmarker?
+    private(set) var initializationErrorMessage: String?
     private var lastImageSize: CGSize = .zero
     private var lastTimestampMs = -1
     private let imageOrientation: UIImage.Orientation = .leftMirrored
@@ -19,8 +20,11 @@ class FaceLandmarkerService: NSObject {
     }
     
     private func setupFaceLandmarker() {
-        guard let modelPath = Bundle.main.path(forResource: "face_landmarker", ofType: "task") else {
-            print("Error: face_landmarker.task not found in bundle.")
+        guard let modelPath = modelAssetPath() else {
+            initializationErrorMessage = """
+            缺少人脸模型文件。请将 face_landmarker.task 放到 App target 资源中（推荐路径: MediaPipeLandmarksApp/Models）。
+            """
+            print("Error: \(initializationErrorMessage!)")
             return
         }
         
@@ -35,9 +39,30 @@ class FaceLandmarkerService: NSObject {
         
         do {
             faceLandmarker = try FaceLandmarker(options: options)
+            initializationErrorMessage = nil
         } catch {
+            initializationErrorMessage = "FaceLandmarker 初始化失败: \(error.localizedDescription)"
             print("Error initializing FaceLandmarker: \(error)")
         }
+    }
+    
+    private func modelAssetPath() -> String? {
+        let candidates = [
+            ("face_landmarker", "task"),
+            ("face_landmarker_v2_with_blendshapes", "task"),
+            ("face_landmarker_v2", "task")
+        ]
+        
+        for (name, ext) in candidates {
+            if let path = Bundle.main.path(forResource: name, ofType: ext, inDirectory: "Models") {
+                return path
+            }
+            if let path = Bundle.main.path(forResource: name, ofType: ext) {
+                return path
+            }
+        }
+        
+        return nil
     }
     
     func detectAsync(sampleBuffer: CMSampleBuffer) {

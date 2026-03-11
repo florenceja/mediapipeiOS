@@ -7,6 +7,8 @@ class HandGestureViewController: UIViewController {
     private let cameraManager = CameraManager()
     private let gestureRecognizerService = GestureRecognizerService()
     private let overlayView = HandOverlayView()
+    private var hasShownSetupError = false
+    private var pendingSetupErrorMessage: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -18,6 +20,14 @@ class HandGestureViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         cameraManager.startSession()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if let message = pendingSetupErrorMessage {
+            showSetupErrorIfNeeded(message: message)
+            pendingSetupErrorMessage = nil
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -43,12 +53,29 @@ class HandGestureViewController: UIViewController {
     
     private func setupService() {
         gestureRecognizerService.delegate = self
+        
+        if let message = gestureRecognizerService.initializationErrorMessage {
+            pendingSetupErrorMessage = message
+        }
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         cameraManager.previewLayer.frame = view.bounds
         overlayView.frame = view.bounds
+    }
+    
+    private func showSetupErrorIfNeeded(message: String) {
+        guard !hasShownSetupError else { return }
+        hasShownSetupError = true
+        
+        let alert = UIAlertController(
+            title: "GestureRecognizer 未就绪",
+            message: message,
+            preferredStyle: .alert
+        )
+        alert.addAction(UIAlertAction(title: "知道了", style: .default))
+        present(alert, animated: true)
     }
 }
 

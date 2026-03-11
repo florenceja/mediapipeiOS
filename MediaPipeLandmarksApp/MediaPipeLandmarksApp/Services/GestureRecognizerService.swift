@@ -9,6 +9,7 @@ class GestureRecognizerService: NSObject {
     
     weak var delegate: GestureRecognizerServiceDelegate?
     private var gestureRecognizer: GestureRecognizer?
+    private(set) var initializationErrorMessage: String?
     private var lastImageSize: CGSize = .zero
     private var lastTimestampMs = -1
     private let imageOrientation: UIImage.Orientation = .leftMirrored
@@ -19,8 +20,11 @@ class GestureRecognizerService: NSObject {
     }
     
     private func setupGestureRecognizer() {
-        guard let modelPath = Bundle.main.path(forResource: "gesture_recognizer", ofType: "task") else {
-            print("Error: gesture_recognizer.task not found in bundle.")
+        guard let modelPath = modelAssetPath() else {
+            initializationErrorMessage = """
+            缺少手势模型文件。请将 gesture_recognizer.task 放到 App target 资源中（推荐路径: MediaPipeLandmarksApp/Models）。
+            """
+            print("Error: \(initializationErrorMessage!)")
             return
         }
         
@@ -35,9 +39,29 @@ class GestureRecognizerService: NSObject {
         
         do {
             gestureRecognizer = try GestureRecognizer(options: options)
+            initializationErrorMessage = nil
         } catch {
+            initializationErrorMessage = "GestureRecognizer 初始化失败: \(error.localizedDescription)"
             print("Error initializing GestureRecognizer: \(error)")
         }
+    }
+    
+    private func modelAssetPath() -> String? {
+        let candidates = [
+            ("gesture_recognizer", "task"),
+            ("gesture_recognizer_v2", "task")
+        ]
+        
+        for (name, ext) in candidates {
+            if let path = Bundle.main.path(forResource: name, ofType: ext, inDirectory: "Models") {
+                return path
+            }
+            if let path = Bundle.main.path(forResource: name, ofType: ext) {
+                return path
+            }
+        }
+        
+        return nil
     }
     
     func recognizeAsync(sampleBuffer: CMSampleBuffer) {
