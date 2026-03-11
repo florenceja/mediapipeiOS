@@ -31,10 +31,11 @@ class FaceLandmarkerService: NSObject {
         let options = FaceLandmarkerOptions()
         options.baseOptions.modelAssetPath = modelPath
         options.runningMode = .liveStream
-        options.numFaces = 1
+        options.numFaces = 2
         options.minFaceDetectionConfidence = 0.5
         options.minFacePresenceConfidence = 0.5
         options.minTrackingConfidence = 0.5
+        options.outputFaceBlendshapes = true
         options.faceLandmarkerLiveStreamDelegate = self
         
         do {

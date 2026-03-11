@@ -14,6 +14,7 @@ class TongueDetectionViewController: UIViewController {
     private let estimateLabel = UILabel()
     private let titleLabel = UILabel()
     private let subtitleLabel = UILabel()
+    private let tongueThreshold: Float = 0.35
     private var hasShownSetupError = false
     private var hasShownRuntimeError = false
     private var pendingSetupErrorMessage: String?
@@ -172,23 +173,13 @@ class TongueDetectionViewController: UIViewController {
         present(alert, animated: true)
     }
     
-    private func mouthOpenRatio(from face: [NormalizedLandmark]) -> CGFloat? {
-        guard face.indices.contains(61),
-              face.indices.contains(291),
-              face.indices.contains(13),
-              face.indices.contains(14) else {
-            return nil
+    private func tongueScore(from result: FaceLandmarkerResult) -> (score: Float, hasScore: Bool) {
+        let allBlendshapes = result.faceBlendshapes
+        guard !allBlendshapes.isEmpty else { return (0, false) }
+        let scores = allBlendshapes.map { categories in
+            categories.first(where: { $0.categoryName.lowercased() == "tongueout" })?.score ?? 0
         }
-        
-        let left = CGPoint(x: CGFloat(face[61].x), y: CGFloat(face[61].y))
-        let right = CGPoint(x: CGFloat(face[291].x), y: CGFloat(face[291].y))
-        let upper = CGPoint(x: CGFloat(face[13].x), y: CGFloat(face[13].y))
-        let lower = CGPoint(x: CGFloat(face[14].x), y: CGFloat(face[14].y))
-        
-        let mouthWidth = hypot(left.x - right.x, left.y - right.y)
-        guard mouthWidth > 0.0001 else { return nil }
-        let mouthOpen = hypot(upper.x - lower.x, upper.y - lower.y)
-        return mouthOpen / mouthWidth
+        return (scores.max() ?? 0, true)
     }
 }
 
@@ -209,20 +200,23 @@ extension TongueDetectionViewController: FaceLandmarkerServiceDelegate {
         }
         
         DispatchQueue.main.async {
-            guard let result = result, let face = result.faceLandmarks.first else {
-                self.overlayView.draw(landmarks: [], imageSize: imageSize)
+            guard let result = result, !result.faceLandmarks.isEmpty else {
+                self.overlayView.draw(landmarks: [], imageSize: imageSize, tongueScore: 0, hasTongueScore: false)
                 self.estimateLabel.text = "估计轮廓: 未检测"
                 self.updateStatus(text: "未检测到面部", color: .systemOrange)
                 return
             }
-            
-            self.overlayView.draw(landmarks: result.faceLandmarks, imageSize: imageSize)
-            if let ratio = self.mouthOpenRatio(from: face), ratio > 0.06 {
-                self.estimateLabel.text = "估计轮廓: 已显示"
-                self.updateStatus(text: "估计中", color: .systemGreen)
+
+            let scoreResult = self.tongueScore(from: result)
+            let score = scoreResult.score
+            let hasScore = scoreResult.hasScore
+            self.overlayView.draw(landmarks: result.faceLandmarks, imageSize: imageSize, tongueScore: score, hasTongueScore: hasScore)
+            if hasScore && score >= self.tongueThreshold {
+                self.estimateLabel.text = String(format: "吐舌分数: %.2f", score)
+                self.updateStatus(text: "吐舌检测成功", color: .systemGreen)
             } else {
-                self.estimateLabel.text = "估计轮廓: 待检测"
-                self.updateStatus(text: "请轻微张口", color: .systemBlue)
+                self.estimateLabel.text = String(format: "吐舌分数: %.2f", score)
+                self.updateStatus(text: "未检测到吐舌", color: .systemOrange)
             }
         }
     }

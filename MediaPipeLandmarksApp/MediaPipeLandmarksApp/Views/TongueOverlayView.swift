@@ -5,6 +5,10 @@ class TongueOverlayView: UIView {
     
     private var faceLandmarks: [[NormalizedLandmark]] = []
     private var imageSize: CGSize = .zero
+    private var tongueScore: Float = 0
+    private var hasTongueScore = false
+    private let lowerInnerLipIndices = [78, 95, 88, 178, 87, 14, 317, 402, 318, 324, 308]
+    private let tongueBlendshapeThreshold: Float = 0.35
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -16,127 +20,115 @@ class TongueOverlayView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func draw(landmarks: [[NormalizedLandmark]], imageSize: CGSize) {
+    func draw(landmarks: [[NormalizedLandmark]], imageSize: CGSize, tongueScore: Float, hasTongueScore: Bool) {
         self.faceLandmarks = landmarks
         self.imageSize = imageSize
+        self.tongueScore = tongueScore
+        self.hasTongueScore = hasTongueScore
         setNeedsDisplay()
     }
     
     override func draw(_ rect: CGRect) {
         super.draw(rect)
         
-        guard !faceLandmarks.isEmpty, imageSize != .zero else { return }
-        guard let context = UIGraphicsGetCurrentContext() else { return }
-        guard let face = faceLandmarks.first else { return }
-        
-        guard let leftMouth = landmarkPoint(at: 61, in: face),
-              let rightMouth = landmarkPoint(at: 291, in: face),
-              let upperInnerLip = landmarkPoint(at: 13, in: face),
-              let lowerInnerLip = landmarkPoint(at: 14, in: face),
-              let chin = landmarkPoint(at: 152, in: face) else {
+        guard !faceLandmarks.isEmpty, imageSize != .zero else {
             return
         }
+        guard let context = UIGraphicsGetCurrentContext() else { return }
         
-        let mouthWidth = distance(leftMouth, rightMouth)
-        let mouthOpen = distance(upperInnerLip, lowerInnerLip)
-        guard mouthWidth > 0.0001 else { return }
-        let openRatio = mouthOpen / mouthWidth
-        guard openRatio > 0.06 else { return }
-        
-        let lipCenter = midpoint(upperInnerLip, lowerInnerLip)
-        let down = normalizedVector(from: lipCenter, to: chin, fallback: CGPoint(x: 0, y: 1))
-        let side = CGPoint(x: -down.y, y: down.x)
-        
-        let extensionFactor = clamp((openRatio - 0.06) / 0.20, min: 0, max: 1)
-        let length = mouthWidth * (0.18 + 0.35 * extensionFactor)
-        let halfWidth = mouthWidth * (0.16 + 0.08 * extensionFactor)
-        
-        let tongueBaseCenter = CGPoint(
-            x: lipCenter.x + down.x * mouthWidth * 0.04,
-            y: lipCenter.y + down.y * mouthWidth * 0.04
-        )
-        let tongueTip = CGPoint(
-            x: tongueBaseCenter.x + down.x * length,
-            y: tongueBaseCenter.y + down.y * length
-        )
-        let leftBase = CGPoint(
-            x: tongueBaseCenter.x + side.x * halfWidth * 0.7,
-            y: tongueBaseCenter.y + side.y * halfWidth * 0.7
-        )
-        let rightBase = CGPoint(
-            x: tongueBaseCenter.x - side.x * halfWidth * 0.7,
-            y: tongueBaseCenter.y - side.y * halfWidth * 0.7
-        )
-        let leftMid = CGPoint(
-            x: tongueBaseCenter.x + side.x * halfWidth + down.x * length * 0.45,
-            y: tongueBaseCenter.y + side.y * halfWidth + down.y * length * 0.45
-        )
-        let rightMid = CGPoint(
-            x: tongueBaseCenter.x - side.x * halfWidth + down.x * length * 0.45,
-            y: tongueBaseCenter.y - side.y * halfWidth + down.y * length * 0.45
-        )
-        
-        let b = transform(tongueBaseCenter)
-        let l0 = transform(leftBase)
-        let l1 = transform(leftMid)
-        let r1 = transform(rightMid)
-        let r0 = transform(rightBase)
-        let tip = transform(tongueTip)
-        
-        let path = UIBezierPath()
-        path.move(to: l0)
-        path.addQuadCurve(to: tip, controlPoint: l1)
-        path.addQuadCurve(to: r0, controlPoint: r1)
-        path.addQuadCurve(to: l0, controlPoint: b)
-        path.close()
-        
-        context.setFillColor(UIColor.systemPink.withAlphaComponent(0.42).cgColor)
-        context.addPath(path.cgPath)
-        context.fillPath()
-        
-        context.setStrokeColor(UIColor.systemPink.cgColor)
-        context.setLineWidth(2)
-        context.addPath(path.cgPath)
-        context.strokePath()
-        
-        let featurePoints = [b, l1, tip, r1]
-        context.setFillColor(UIColor.white.cgColor)
-        for point in featurePoints {
-            let p = CGRect(x: point.x - 2.5, y: point.y - 2.5, width: 5, height: 5)
-            context.fillEllipse(in: p)
+        for face in faceLandmarks {
+            guard hasMouthAnchors(in: face) else { continue }
+            drawMouthBaseline(in: context, face: face)
+            
+            let score = hasTongueScore ? tongueScore : 0
+            if score >= tongueBlendshapeThreshold {
+                drawTonguePoints(in: context, face: face, tongueScore: CGFloat(score))
+            }
         }
     }
     
-    private func landmarkPoint(at index: Int, in face: [NormalizedLandmark]) -> CGPoint? {
-        guard index >= 0, index < face.count else { return nil }
-        let landmark = face[index]
-        return CGPoint(x: CGFloat(landmark.x), y: CGFloat(landmark.y))
-    }
-    
-    private func transform(_ normalized: CGPoint) -> CGPoint {
+    private func transform(_ point: CGPoint) -> CGPoint {
         CoordinateTransformer.point(
-            from: normalized,
+            from: point,
             imageSize: imageSize,
             viewSize: bounds.size
         )
     }
     
-    private func distance(_ a: CGPoint, _ b: CGPoint) -> CGFloat {
-        hypot(a.x - b.x, a.y - b.y)
+    private func drawMouthBaseline(in context: CGContext, face: [NormalizedLandmark]) {
+        let path = UIBezierPath()
+        for (index, pointIndex) in lowerInnerLipIndices.enumerated() {
+            guard pointIndex < face.count else { continue }
+            let landmark = face[pointIndex]
+            let point = transform(CGPoint(x: CGFloat(landmark.x), y: CGFloat(landmark.y)))
+            if index == 0 {
+                path.move(to: point)
+            } else {
+                path.addLine(to: point)
+            }
+            context.setStrokeColor(UIColor.white.withAlphaComponent(0.86).cgColor)
+            context.setLineWidth(2.5)
+            context.strokeEllipse(in: CGRect(x: point.x - 1.8, y: point.y - 1.8, width: 3.6, height: 3.6))
+        }
+        path.close()
+        UIColor.white.withAlphaComponent(0.86).setStroke()
+        path.lineWidth = 2.5
+        path.stroke()
     }
     
-    private func midpoint(_ a: CGPoint, _ b: CGPoint) -> CGPoint {
-        CGPoint(x: (a.x + b.x) * 0.5, y: (a.y + b.y) * 0.5)
+    private func drawTonguePoints(in context: CGContext, face: [NormalizedLandmark], tongueScore: CGFloat) {
+        guard let upperLip = landmarkPoint(at: 13, in: face),
+              let lowerLip = landmarkPoint(at: 14, in: face),
+              let leftCorner = landmarkPoint(at: 78, in: face),
+              let rightCorner = landmarkPoint(at: 308, in: face),
+              let chin = landmarkPoint(at: 152, in: face) else {
+            return
+        }
+        
+        let mouthOpen = max(lowerLip.y - upperLip.y, 0)
+        let mouthWidth = max(abs(rightCorner.x - leftCorner.x), 0.0001)
+        let centerX = min(max((leftCorner.x + rightCorner.x) * 0.5, 0), 1)
+        let baseY = min(max(lowerLip.y + mouthOpen * 0.06, 0), 1)
+        let extension = min(max(0.9 + tongueScore * 1.6, 0.9), 2.5)
+        let tipY = min(baseY + mouthOpen * extension, chin.y + mouthOpen * 0.85)
+        let midY = min(max((baseY + tipY) * 0.57, 0), 1)
+        
+        let topHalfWidth = mouthWidth * 0.18
+        let midHalfWidth = mouthWidth * 0.30
+        let points = [
+            CGPoint(x: min(max(centerX - topHalfWidth, 0), 1), y: baseY),
+            CGPoint(x: min(max(centerX - midHalfWidth, 0), 1), y: midY),
+            CGPoint(x: centerX, y: min(max(tipY, 0), 1)),
+            CGPoint(x: min(max(centerX + midHalfWidth, 0), 1), y: midY),
+            CGPoint(x: min(max(centerX + topHalfWidth, 0), 1), y: baseY)
+        ]
+        
+        let transformed = points.map { transform($0) }
+        let path = UIBezierPath()
+        if let first = transformed.first {
+            path.move(to: first)
+            transformed.dropFirst().forEach { path.addLine(to: $0) }
+            path.close()
+        }
+        
+        UIColor.systemPink.withAlphaComponent(0.57).setFill()
+        path.fill()
+        UIColor.systemPink.withAlphaComponent(0.95).setStroke()
+        path.lineWidth = 2.5
+        path.stroke()
+        
+        context.setFillColor(UIColor(red: 1.0, green: 0.47, blue: 0.67, alpha: 1.0).cgColor)
+        for point in transformed {
+            context.fillEllipse(in: CGRect(x: point.x - 2.5, y: point.y - 2.5, width: 5, height: 5))
+        }
     }
     
-    private func normalizedVector(from start: CGPoint, to end: CGPoint, fallback: CGPoint) -> CGPoint {
-        let v = CGPoint(x: end.x - start.x, y: end.y - start.y)
-        let len = hypot(v.x, v.y)
-        guard len > 0.0001 else { return fallback }
-        return CGPoint(x: v.x / len, y: v.y / len)
+    private func hasMouthAnchors(in face: [NormalizedLandmark]) -> Bool {
+        [13, 14, 78, 308, 152].allSatisfy { $0 < face.count }
     }
     
-    private func clamp(_ value: CGFloat, min minValue: CGFloat, max maxValue: CGFloat) -> CGFloat {
-        Swift.max(minValue, Swift.min(maxValue, value))
+    private func landmarkPoint(at index: Int, in face: [NormalizedLandmark]) -> CGPoint? {
+        guard index >= 0, index < face.count else { return nil }
+        return CGPoint(x: CGFloat(face[index].x), y: CGFloat(face[index].y))
     }
 }
